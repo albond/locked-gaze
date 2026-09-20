@@ -1,0 +1,12 @@
+MACOSX_DEPLOYMENT_TARGET = 14.0
+ARCHS = arm64
+SWIFT_VERSION = 5.0
+CLANG_CXX_LANGUAGE_STANDARD = c++17
+CLANG_ENABLE_OBJC_ARC = YES
+ALWAYS_SEARCH_USER_PATHS = NO
+ENABLE_HARDENED_RUNTIME = YES
+ENABLE_USER_SCRIPT_SANDBOXING = NO
+CODE_SIGN_STYLE = Automatic
+CODE_SIGN_IDENTITY = Apple Development
+// Configure a local team without committing account-specific settings.
+#include? "Signing.local.xcconfig"
