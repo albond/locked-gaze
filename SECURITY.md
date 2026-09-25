@@ -16,5 +16,6 @@ where appropriate. There is no guaranteed response time or paid bug bounty.
 
 ## Supported versions
 
-Version 1.0.0 is in preparation. After release, security fixes are intended
-for the latest stable version; older versions may require an update.
+Security fixes are intended for the latest stable version available on the
+Mac App Store. Older versions may require an update. The source repository
+may contain fixes before an App Store update completes review.

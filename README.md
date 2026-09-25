@@ -15,19 +15,19 @@
   <a href="#download-for-mac"><img src="https://img.shields.io/badge/macOS-14%2B-000?logo=apple&amp;logoColor=white&amp;style=flat-square" alt="macOS 14 or later"></a>
   <a href="#download-for-mac"><img src="https://img.shields.io/badge/Apple_Silicon-Pro_%2F_Max_%2F_Ultra-555?logo=apple&amp;logoColor=white&amp;style=flat-square" alt="Apple Silicon Pro, Max, or Ultra; see requirements"></a>
   <a href="https://developer.apple.com/documentation/swiftui"><img src="https://img.shields.io/badge/SwiftUI-%2B%20AppKit-1F6FEB?style=flat-square" alt="SwiftUI and AppKit"></a>
-  <a href="https://apps.apple.com/app/id6814174298"><img src="https://img.shields.io/badge/Release-1.0.0-8A63D2?style=flat-square" alt="Release 1.0.0 on the Mac App Store"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/Source-1.0.1-8A63D2?style=flat-square" alt="Source version 1.0.1 — see what's new"></a>
 </p>
 
 <p align="center">
   <a href="#your-conversation-your-mac"><img src="https://img.shields.io/badge/Processing-On--device-2EA043?style=flat-square" alt="On-device processing"></a>
   <a href="#your-conversation-your-mac"><img src="https://img.shields.io/badge/Privacy-First-2EA043?style=flat-square" alt="Privacy first"></a>
   <a href="#your-conversation-your-mac"><img src="https://img.shields.io/badge/Works-Offline-2EA043?style=flat-square" alt="Offline gaze correction"></a>
-  <a href="https://github.com/albond/locked-gaze/stargazers"><img src="https://img.shields.io/github/stars/albond/locked-gaze?style=flat-square" alt="GitHub stars"></a>
+  <a href="https://github.com/albond/locked-gaze"><img src="https://img.shields.io/github/stars/albond/locked-gaze?style=flat-square" alt="Star Locked Gaze on GitHub"></a>
   <a href="#support-the-project"><img src="https://img.shields.io/badge/Donate-USDC%20%E2%80%A2%20USDT%20%E2%80%A2%20EURC-7B3FE4?logo=ethereum&amp;logoColor=white&amp;style=flat-square" alt="Donate USDC, USDT, or EURC"></a>
 </p>
 
 <p align="center">
-  <a href="#a-small-app-with-a-clear-purpose">Features</a> · <a href="#your-conversation-your-mac">Privacy</a> · <a href="#three-simple-steps">How it works</a> · <a href="#download-for-mac">Download</a> · <a href="https://github.com/albond/locked-gaze">Star on GitHub</a> · <a href="#support-the-project">Donate</a>
+  <a href="#a-small-app-with-a-clear-purpose">Features</a> · <a href="#your-conversation-your-mac">Privacy</a> · <a href="#three-simple-steps">How it works</a> · <a href="#download-for-mac">Download</a> · <a href="CHANGELOG.md">What's New</a> · <a href="https://github.com/albond/locked-gaze">Star on GitHub</a> · <a href="#support-the-project">Donate</a>
 </p>
 
 Reading notes, following a presentation, or watching the person on screen can pull your gaze away from the camera. Locked Gaze helps bring it back, so you can focus on what you want to say.
@@ -46,7 +46,7 @@ Your camera frames stay on your Mac. Eye-contact correction runs entirely on you
 
 - **Eye contact, with less effort.** Gaze correction designed for conversations, presentations, and interviews.
 - **A home in your menu bar.** Turn correction on when you need it and off when you are done.
-- **One click from Control Center.** On macOS 26 or later, add the Eye Contact control to turn correction on or off.
+- **One click from Control Center.** On macOS 26 or later, add the Locked Gaze control to turn correction on or off.
 - **Your choice of camera.** Select a webcam or use your iPhone through Continuity Camera.
 - **A camera you can select.** Choose **Locked Gaze** in video apps that support macOS virtual cameras.
 - **Made for Apple Silicon.** Local processing built around your Mac.
@@ -55,7 +55,7 @@ Your camera frames stay on your Mac. Eye-contact correction runs entirely on you
 
 After granting camera access and enabling the camera extension:
 
-1. Choose your source camera in Locked Gaze.
+1. Keep **Automatic (System Preferred)** selected, or choose your source camera in Locked Gaze.
 2. Click **Activate** in the menu bar.
 3. Select **Locked Gaze** as the camera in your video app.
 
@@ -69,9 +69,11 @@ On **macOS 26 or later**, add the **Locked Gaze** control to Control Center. Aft
 
 ## Download for Mac
 
-Locked Gaze **1.0.0** is now available **free on the Mac App Store**. Download the ready-to-use app with everything needed for on-device gaze correction included.
+Locked Gaze is available **free on the Mac App Store**. Download the ready-to-use app with everything needed for on-device gaze correction included.
 
 [Download Locked Gaze on the Mac App Store](https://apps.apple.com/app/id6814174298)
+
+[What's new in 1.0.1](CHANGELOG.md#101): more reliable virtual camera activation, better Control Center sync, and clearer default camera selection. The source version badge refers to this repository; the App Store page shows the version currently available to download.
 
 [Follow Locked Gaze on GitHub](https://github.com/albond/locked-gaze) and give it a star to bookmark the project. The source edition includes the native application and model interface specifications. Model weights are not included; building a working gaze-correction app requires compatible models supplied separately.
 
