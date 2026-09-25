@@ -6,11 +6,16 @@
 <p align="center"><strong>Keep your eyes on the conversation.</strong><br>Eye-contact correction for your Mac. Private by design.</p>
 
 <p align="center">
+  <a href="https://apps.apple.com/app/id6814174298"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-mac-app-store/black/en-us?size=250x83" alt="Download on the Mac App Store" height="50"></a>
+</p>
+<p align="center">Free. No subscriptions. No hidden payments.</p>
+
+<p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/Source_license-MIT-blue?style=flat-square" alt="Source code license: MIT"></a>
-  <a href="#coming-to-mac"><img src="https://img.shields.io/badge/macOS-14%2B-000?logo=apple&amp;logoColor=white&amp;style=flat-square" alt="macOS 14 or later"></a>
-  <a href="#coming-to-mac"><img src="https://img.shields.io/badge/Apple_Silicon-Pro_%2F_Max_%2F_Ultra-555?logo=apple&amp;logoColor=white&amp;style=flat-square" alt="Apple Silicon Pro, Max, or Ultra; see requirements"></a>
+  <a href="#download-for-mac"><img src="https://img.shields.io/badge/macOS-14%2B-000?logo=apple&amp;logoColor=white&amp;style=flat-square" alt="macOS 14 or later"></a>
+  <a href="#download-for-mac"><img src="https://img.shields.io/badge/Apple_Silicon-Pro_%2F_Max_%2F_Ultra-555?logo=apple&amp;logoColor=white&amp;style=flat-square" alt="Apple Silicon Pro, Max, or Ultra; see requirements"></a>
   <a href="https://developer.apple.com/documentation/swiftui"><img src="https://img.shields.io/badge/SwiftUI-%2B%20AppKit-1F6FEB?style=flat-square" alt="SwiftUI and AppKit"></a>
-  <a href="#coming-to-mac"><img src="https://img.shields.io/badge/Release-1.0.0_planned-8A63D2?style=flat-square" alt="Release 1.0.0 planned"></a>
+  <a href="https://apps.apple.com/app/id6814174298"><img src="https://img.shields.io/badge/Release-1.0.0-8A63D2?style=flat-square" alt="Release 1.0.0 on the Mac App Store"></a>
 </p>
 
 <p align="center">
@@ -22,7 +27,7 @@
 </p>
 
 <p align="center">
-  <a href="#a-small-app-with-a-clear-purpose">Features</a> · <a href="#your-conversation-your-mac">Privacy</a> · <a href="#three-simple-steps">How it works</a> · <a href="#coming-to-mac">Availability</a> · <a href="https://github.com/albond/locked-gaze">Star on GitHub</a> · <a href="#support-the-project">Donate</a>
+  <a href="#a-small-app-with-a-clear-purpose">Features</a> · <a href="#your-conversation-your-mac">Privacy</a> · <a href="#three-simple-steps">How it works</a> · <a href="#download-for-mac">Download</a> · <a href="https://github.com/albond/locked-gaze">Star on GitHub</a> · <a href="#support-the-project">Donate</a>
 </p>
 
 Reading notes, following a presentation, or watching the person on screen can pull your gaze away from the camera. Locked Gaze helps bring it back, so you can focus on what you want to say.
@@ -62,17 +67,19 @@ On **macOS 26 or later**, add the **Locked Gaze** control to Control Center. Aft
 
 ![Illustrated character pressing the Locked Gaze Control Center button: turn correction on or off on macOS 26 or later.](Resources/Screenshots/06-control-center.png)
 
-## Coming to Mac
+## Download for Mac
 
-Locked Gaze **1.0.0** is being prepared for a **free Mac App Store release**. It is not available to download yet.
+Locked Gaze **1.0.0** is now available **free on the Mac App Store**. Download the ready-to-use app with everything needed for on-device gaze correction included.
+
+[Download Locked Gaze on the Mac App Store](https://apps.apple.com/app/id6814174298)
 
 [Follow Locked Gaze on GitHub](https://github.com/albond/locked-gaze) and give it a star to bookmark the project. The source edition includes the native application and model interface specifications. Model weights are not included; building a working gaze-correction app requires compatible models supplied separately.
 
-Designed for **macOS 14 Sonoma or later**, with **M2 Pro / Max / Ultra or a newer Pro / Max / Ultra chip**. Compatibility testing is ongoing ahead of release.
+Requires **macOS 14 Sonoma or later**, with **M2 Pro / Max / Ultra or a newer Pro / Max / Ultra chip**. Camera access and approval of the Locked Gaze camera extension are required.
 
 ## Support the project
 
-Locked Gaze is being built for a free release, with no subscriptions or hidden payments. If you like the idea, [give the project a star](https://github.com/albond/locked-gaze) or leave an optional tip to support development. Donations do not unlock features; the app is designed to be complete for everyone.
+Locked Gaze is free, with no subscriptions or hidden payments. If you find it useful, [give the project a star](https://github.com/albond/locked-gaze) or leave an optional tip to support development. Donations do not unlock features; the app is complete for everyone.
 
 ### Tip jar
 
