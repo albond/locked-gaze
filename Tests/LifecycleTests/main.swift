@@ -54,6 +54,18 @@ import Foundation
         startingGate.release()
         do { try await attempt.value; preconditionFailure() } catch { precondition(error.localizedDescription == "Early stream failure") }
         precondition(!states.contains(.active) && starting.state == .idle)
-        print("PASS: lifecycle idempotence, 25 restart cycles, permission/model failures, disconnect, duplicate failure, busy requests, quit during approval, early stream failure")
+        // Switching cameras restarts in place: observers never see an idle session.
+        var switchEvents: [String] = [], switchStates: [CameraLifecycle.State] = [], switchBroken = false
+        let switching = CameraLifecycle(prepare: {}, start: { switchEvents.append("start"); if switchBroken { throw GazeError.message("Camera unavailable") } },
+            stop: { switchEvents.append("stop") })
+        try await switching.restart(); precondition(switchEvents.isEmpty && switching.state == .idle)
+        try await switching.setEnabled(true)
+        switching.onChange = { switchStates.append(switching.state) }
+        try await switching.restart()
+        precondition(switchStates == [.starting, .active] && switchEvents == ["start", "stop", "start"])
+        switchBroken = true
+        do { try await switching.restart(); preconditionFailure() } catch {}
+        precondition(switchStates.suffix(2) == [.starting, .idle] && switchEvents.suffix(2) == ["start", "stop"])
+        print("PASS: lifecycle idempotence, 25 restart cycles, permission/model failures, disconnect, duplicate failure, busy requests, quit during approval, early stream failure, in-place camera restart")
     }
 }

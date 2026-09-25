@@ -85,13 +85,13 @@ final class CameraDevice: NSObject, CMIOExtensionDeviceSource {
         // Validate the actual process against our own signing team instead.
         var ownCode: SecCode?
         var ownStaticCode: SecStaticCode?
-        var information: CFDictionary?
         guard SecCodeCopySelf([], &ownCode) == errSecSuccess, let ownCode,
               SecCodeCopyStaticCode(ownCode, [], &ownStaticCode) == errSecSuccess, let ownStaticCode,
-              SecCodeCopySigningInformation(ownStaticCode, SecCSFlags(rawValue: kSecCSSigningInformation), &information) == errSecSuccess,
-              let info = information as? [String: Any],
-              let team = info[kSecCodeInfoTeamIdentifier as String] as? String,
-              team.range(of: "^[A-Z0-9]{10}$", options: .regularExpression) != nil else { return false }
+              let team = ProducerAuthorization.teamIdentifier(of: ownStaticCode),
+              let authorization = ProducerAuthorization(teamIdentifier: team) else {
+            Logger(subsystem: CameraContract.extensionID, category: "authorization").error("Cannot establish the camera extension signing identity")
+            return false
+        }
         var guest: SecCode?
         let attributes = [kSecGuestAttributePid as String: NSNumber(value: client.pid),
                           kSecGuestAttributeDynamicCode as String: true] as CFDictionary
@@ -100,10 +100,7 @@ final class CameraDevice: NSObject, CMIOExtensionDeviceSource {
             Logger(subsystem: CameraContract.extensionID, category: "authorization").error("Producer code lookup failed: \(lookup)")
             return false
         }
-        var requirement: SecRequirement?
-        let rule = "anchor apple generic and identifier \"\(CameraContract.publisherID)\" and certificate leaf[subject.OU] = \"\(team)\""
-        guard SecRequirementCreateWithString(rule as CFString, [], &requirement) == errSecSuccess, let requirement else { return false }
-        let status = SecCodeCheckValidity(guest, [], requirement)
+        let status = authorization.validate(guest)
         Logger(subsystem: CameraContract.extensionID, category: "authorization").notice("Producer signature validation: \(status)")
         return status == errSecSuccess
     }

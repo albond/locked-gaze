@@ -105,12 +105,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(.separator())
         let source = menu.addItem(withTitle: "Source Camera", action: nil, keyEquivalent: "")
         source.image = NSImage(systemSymbolName: "video", accessibilityDescription: nil)
+        cameraMenu.delegate = self
         source.submenu = cameraMenu
         menu.addItem(.separator())
         let aboutItem = menu.addItem(withTitle: "About Locked Gaze…", action: #selector(showAbout), keyEquivalent: "")
         let quit = menu.addItem(withTitle: "Quit Locked Gaze", action: #selector(quit), keyEquivalent: "q")
         for item in [toggleItem!, aboutItem, quit] { item.target = self }
         statusItem.menu = menu
+        rebuildCameras()
         GazeControlState.setActive = { [weak self] enabled in
             guard let self else { throw GazeError.message("Locked Gaze is closing.") }
             try await self.setEnabled(enabled)
@@ -139,48 +141,37 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         for item in cameraMenu.items where item.action == #selector(selectCamera(_:)) {
             item.isEnabled = presentation.canToggle
         }
-        GazeControlState.publish(presentation.active)
+        // Publish completed states; a request from the menu is published as it
+        // is made (see toggle), so transitions in between add nothing.
+        if state == .idle || state == .active || terminating {
+            GazeControlState.publish(presentation.active)
+        }
     }
-    func menuWillOpen(_ menu: NSMenu) { rebuildCameras() }
+    func menuNeedsUpdate(_ menu: NSMenu) { rebuildCameras() }
     private func rebuildCameras() {
-        cameraMenu.removeAllItems()
-        cameraMenu.autoenablesItems = false
-        func add(_ title: String, id: String?) {
-            let item = cameraMenu.addItem(withTitle: title, action: #selector(selectCamera(_:)), keyEquivalent: "")
-            item.target = self; item.representedObject = id
-            item.state = selectedCameraID == id ? .on : .off
-            item.isEnabled = state == .idle || state == .active
-        }
-        add("Automatic (System Preferred)", id: nil)
-        cameraMenu.addItem(.separator())
-        let devices = CameraSession.availableCameras()
-        for device in devices { add(device.localizedName, id: device.uniqueID) }
-        if let selectedCameraID, !devices.contains(where: { $0.uniqueID == selectedCameraID }) {
-            let missing = cameraMenu.addItem(withTitle: "Selected Camera Unavailable", action: nil, keyEquivalent: "")
-            missing.state = .on; missing.isEnabled = false
-        }
-        if devices.isEmpty {
-            let empty = cameraMenu.addItem(withTitle: "No Cameras Connected", action: nil, keyEquivalent: "")
-            empty.isEnabled = false
-        }
+        SourceCameraMenu.populate(cameraMenu, devices: CameraSession.availableCameras().map {
+            CameraChoice(id: $0.uniqueID, name: $0.localizedName, connected: $0.isConnected)
+        }, selectedID: selectedCameraID, enabled: state == .idle || state == .active,
+           target: self, action: #selector(selectCamera(_:)))
     }
     @objc private func selectCamera(_ item: NSMenuItem) {
         guard state == .idle || state == .active else { return }
         let id = item.representedObject as? String
         guard id != selectedCameraID else { return }
         UserDefaults.standard.set(id, forKey: "sourceCameraID")
-        let restart = state == .active
-        Task {
-            if restart {
-                do { try await setEnabled(false); try await setEnabled(true) } catch { show(error) }
-            }
-        }
+        rebuildCameras()
+        guard state == .active else { return }
+        Task { do { try await lifecycle.restart() } catch { show(error) } }
     }
     @objc private func showAbout() { about.show() }
     @objc private func toggle() {
         let presentation = CameraPresentation(state: state, closing: terminating)
         guard presentation.canToggle else { return }
         let enabled = !presentation.active
+        // Show the request in Control Center while the menu is still in use: macOS
+        // applies a menu bar app's control reloads at once only while it is in the
+        // foreground. The outcome is published again when the transition completes.
+        GazeControlState.publish(enabled)
         Task { do { try await setEnabled(enabled) } catch { if !terminating { show(error) } } }
     }
     private func setEnabled(_ enabled: Bool) async throws {
@@ -188,6 +179,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         try await lifecycle.setEnabled(enabled)
     }
     @objc private func quit() { NSApp.terminate(nil) }
+    func applicationDidBecomeActive(_ notification: Notification) {
+        // Alerts and permission windows bring the app forward; resynchronize the
+        // control then, e.g. after an activation requested from the menu failed.
+        GazeControlState.reload()
+    }
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         guard !terminating else { return .terminateLater }
         terminating = true

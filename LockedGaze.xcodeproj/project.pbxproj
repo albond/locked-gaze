@@ -147,6 +147,17 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.swift</string>
 		</dict>
+		<key>E26D999A86947B67F4844FA6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/App/SourceCameraMenu.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
 		<key>AF086B9EDF5D21B7535C7202</key>
 		<dict>
 			<key>isa</key>
@@ -169,12 +180,34 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.swift</string>
 		</dict>
+		<key>3901E9379DB363554E85E331</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/CameraExtension/ProducerAuthorization.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
 		<key>32D324E8BEEE0D338B832676</key>
 		<dict>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>path</key>
 			<string>Sources/CameraExtension/main.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
+		<key>F69629B2B78ECDDEFFD61CD1</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/ControlSupport/ControlStateStore.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 			<key>lastKnownFileType</key>
@@ -481,9 +514,12 @@
 				<string>CCB001D5E9CF861EC8CE202C</string>
 				<string>DED429E8F9208C8118435C41</string>
 				<string>A2DC7F627C51D09FD53F9A13</string>
+				<string>E26D999A86947B67F4844FA6</string>
 				<string>AF086B9EDF5D21B7535C7202</string>
 				<string>8E00FA504E47B2EE67AC6581</string>
+				<string>3901E9379DB363554E85E331</string>
 				<string>32D324E8BEEE0D338B832676</string>
+				<string>F69629B2B78ECDDEFFD61CD1</string>
 				<string>448BBD263BB57919E843D915</string>
 				<string>B60FAC0CDFDC6B7FD6ADAC90</string>
 				<string>4B324CCB000D3A0BEEA02CE8</string>
@@ -546,7 +582,7 @@
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>3</string>
 				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf</string>
+				<string>dwarf-with-dsym</string>
 			</dict>
 		</dict>
 		<key>B4E10CAA9C5E22150B71559C</key>
@@ -625,12 +661,26 @@
 			<key>fileRef</key>
 			<string>A2DC7F627C51D09FD53F9A13</string>
 		</dict>
+		<key>1D374634814F22C287F61CCF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>E26D999A86947B67F4844FA6</string>
+		</dict>
 		<key>884EA16F46192369BE17EE08</key>
 		<dict>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
 			<string>AF086B9EDF5D21B7535C7202</string>
+		</dict>
+		<key>5880A609F33164C203A62033</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>F69629B2B78ECDDEFFD61CD1</string>
 		</dict>
 		<key>EC530D9BE21F8E51DDB5955F</key>
 		<dict>
@@ -744,7 +794,9 @@
 				<string>FB7199A283E7A151CFFFEFAC</string>
 				<string>9D4D007F1CCD8097A6423E97</string>
 				<string>B7DFBECB64C8002B6CE344BE</string>
+				<string>1D374634814F22C287F61CCF</string>
 				<string>884EA16F46192369BE17EE08</string>
+				<string>5880A609F33164C203A62033</string>
 				<string>EC530D9BE21F8E51DDB5955F</string>
 				<string>7039C79789E51AEDFCF7C296</string>
 				<string>2DC6CED889C2C000245C6096</string>
@@ -769,6 +821,13 @@
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
 			<string>8E00FA504E47B2EE67AC6581</string>
+		</dict>
+		<key>7351DBE5F7EFE5E5826011B2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>3901E9379DB363554E85E331</string>
 		</dict>
 		<key>2D952D34D352B1BA7DC7DC81</key>
 		<dict>
@@ -800,6 +859,7 @@
 			<key>files</key>
 			<array>
 				<string>C0AFACEBDE3BBA8A26587CB9</string>
+				<string>7351DBE5F7EFE5E5826011B2</string>
 				<string>2D952D34D352B1BA7DC7DC81</string>
 				<string>840DB6EF0117C1A2925F0FEA</string>
 				<string>9277D1013B2A14364CDB59E9</string>
@@ -891,6 +951,13 @@
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
+		<key>68735DCCA0E52D3C8159F4E5</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>F69629B2B78ECDDEFFD61CD1</string>
+		</dict>
 		<key>FADF4CDD057F0B3D03CF301D</key>
 		<dict>
 			<key>isa</key>
@@ -913,6 +980,7 @@
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
+				<string>68735DCCA0E52D3C8159F4E5</string>
 				<string>FADF4CDD057F0B3D03CF301D</string>
 				<string>7604FA77B0B65FD0C99BFFD3</string>
 			</array>
@@ -1076,7 +1144,7 @@ cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>3</string>
 				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf</string>
+				<string>dwarf-with-dsym</string>
 			</dict>
 		</dict>
 		<key>BD98151502478E2827517B50</key>
@@ -1294,7 +1362,7 @@ cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>3</string>
 				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf</string>
+				<string>dwarf-with-dsym</string>
 			</dict>
 		</dict>
 		<key>E05DF73DB18D2EA4ACCE79C2</key>
@@ -1457,7 +1525,7 @@ cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>3</string>
 				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf</string>
+				<string>dwarf-with-dsym</string>
 			</dict>
 		</dict>
 		<key>7BCEE9A04133D8A2FED7D4D3</key>
@@ -1575,7 +1643,7 @@ cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED
 				<key>GCC_OPTIMIZATION_LEVEL</key>
 				<string>3</string>
 				<key>DEBUG_INFORMATION_FORMAT</key>
-				<string>dwarf</string>
+				<string>dwarf-with-dsym</string>
 			</dict>
 		</dict>
 		<key>78C3946580C419ADCFAA768D</key>

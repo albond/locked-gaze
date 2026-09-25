@@ -21,14 +21,25 @@ final class CameraLifecycle {
     func setEnabled(_ enabled: Bool) async throws {
         guard !closing else { throw GazeError.message("Locked Gaze is closing.") }
         if (enabled && state == .active) || (!enabled && state == .idle) { return }
+        try await change(to: enabled ? .starting : .stopping)
+    }
+    /// Restarts an active session in place, e.g. after the source camera changes.
+    /// Observers see `starting`, never `idle`, so indicators stay enabled.
+    func restart() async throws {
+        guard !closing else { throw GazeError.message("Locked Gaze is closing.") }
+        guard state == .active else { return }
+        try await change(to: .starting, restarting: true)
+    }
+    private func change(to next: State, restarting: Bool = false) async throws {
         guard state == .idle || state == .active else { throw GazeError.message("The camera is changing state. Try again in a moment.") }
         operation += 1
         let token = operation
-        state = enabled ? .starting : .stopping
+        state = next
         startupFailure = nil
         let job = Task { @MainActor in
-            if !enabled { await stop(); state = .idle; return }
+            if next == .stopping { await stop(); state = .idle; return }
             do {
+                if restarting { await stop() }
                 try await prepare()
                 try Task.checkCancellation()
                 try await start()

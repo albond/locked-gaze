@@ -30,7 +30,7 @@ def configs(name,settings):
     configurations=[]
     for configuration in ['Debug','Release']:
         build=dict(settings)
-        build.update(SWIFT_OPTIMIZATION_LEVEL='-Onone' if configuration=='Debug' else '-O',GCC_OPTIMIZATION_LEVEL='0' if configuration=='Debug' else '3',DEBUG_INFORMATION_FORMAT='dwarf')
+        build.update(SWIFT_OPTIMIZATION_LEVEL='-Onone' if configuration=='Debug' else '-O',GCC_OPTIMIZATION_LEVEL='0' if configuration=='Debug' else '3',DEBUG_INFORMATION_FORMAT='dwarf' if configuration=='Debug' else 'dwarf-with-dsym')
         configurations.append(add(name+configuration,'XCBuildConfiguration',name=configuration,baseConfigurationReference=config,buildSettings=build))
     return add(name+'configs','XCConfigurationList',buildConfigurations=configurations,defaultConfigurationIsVisible='0',defaultConfigurationName='Release')
 project_configs=configs('project-',{})
@@ -77,9 +77,9 @@ add('project','PBXProject',attributes={'LastUpgradeCheck':'2700','BuildIndepende
 directory=root/'LockedGaze.xcodeproj';directory.mkdir(exist_ok=True)
 (directory/'project.pbxproj').write_bytes(plistlib.dumps(dict(archiveVersion='1',classes={},objectVersion='56',objects=objects,rootObject=project),sort_keys=False))
 for filename,identifier,kind in [('App-Info.plist','local.lockedgaze.app','APPL'),('Camera-Info.plist','local.lockedgaze.app.camera','SYSX')]:
-    info=dict(CFBundleIdentifier='$(PRODUCT_BUNDLE_IDENTIFIER)',CFBundleExecutable='$(EXECUTABLE_NAME)',CFBundleName='Locked Gaze',CFBundlePackageType=kind,CFBundleVersion='13',CFBundleShortVersionString='1.0.0',LSMinimumSystemVersion='$(MACOSX_DEPLOYMENT_TARGET)',NSSystemExtensionUsageDescription='Locked Gaze supplies processed video to other camera apps.')
-    if kind=='APPL':info.update(CFBundleIconFile="AppIcon",CFBundleDevelopmentRegion="en",LGAppGroup="$(TeamIdentifierPrefix)local.lockedgaze.app",LSUIElement=True,NSCameraUsageDescription='Locked Gaze corrects your gaze locally on this Mac.',NSCameraUseContinuityCameraDeviceType=True,NSHighResolutionCapable=True)
-    else:info.update(CFBundleVersion='8',CMIOExtension={'CMIOExtensionMachServiceName':'$(TeamIdentifierPrefix)$(PRODUCT_BUNDLE_IDENTIFIER)'})
+    info=dict(CFBundleIdentifier='$(PRODUCT_BUNDLE_IDENTIFIER)',CFBundleExecutable='$(EXECUTABLE_NAME)',CFBundleName='Locked Gaze',CFBundleDisplayName='Locked Gaze',CFBundlePackageType=kind,CFBundleVersion='15',CFBundleShortVersionString='1.0.1',LSMinimumSystemVersion='$(MACOSX_DEPLOYMENT_TARGET)',NSSystemExtensionUsageDescription='Locked Gaze supplies processed video to other camera apps.')
+    if kind=='APPL':info.update(LSApplicationCategoryType="public.app-category.photography",CFBundleIconFile="AppIcon",CFBundleDevelopmentRegion="en",LGAppGroup="$(TeamIdentifierPrefix)local.lockedgaze.app",LSUIElement=True,NSCameraUsageDescription='Locked Gaze corrects your gaze locally on this Mac.',NSCameraUseContinuityCameraDeviceType=True,NSHighResolutionCapable=True)
+    else:info.update(CFBundleVersion='15',CMIOExtension={'CMIOExtensionMachServiceName':'$(TeamIdentifierPrefix)$(PRODUCT_BUNDLE_IDENTIFIER)'})
     (root/'Config'/filename).write_bytes(plistlib.dumps(info))
 scheme=ET.Element('Scheme',LastUpgradeVersion='2700',version='1.3')
 build=ET.SubElement(scheme,'BuildAction',parallelizeBuildables='YES',buildImplicitDependencies='YES')

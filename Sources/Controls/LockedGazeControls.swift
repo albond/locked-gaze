@@ -11,7 +11,7 @@ struct EyeContactControl: ControlWidget {
         StaticControlConfiguration(kind: GazeControlState.kind, provider: Provider()) { enabled in
             ControlWidgetToggle("Eye Contact", isOn: enabled, action: SetGazeEnabledIntent()) { active in
                 Label(active ? "Active" : "Inactive", systemImage: active ? "eye.fill" : "eye")
-            }.tint(.cyan)
+            }.tint(.blue)
         }
         .displayName("Locked Gaze")
         .description("Turn on-device eye contact correction on or off.")

@@ -32,8 +32,14 @@ xcrun swiftc "${swift[@]}" -parse-as-library Sources/Core/GazeError.swift Source
 run StartupRetryTests
 xcrun swiftc "${swift[@]}" -parse-as-library Sources/Core/GazeError.swift Sources/Shared/CameraContract.swift Sources/App/ExtensionInstaller.swift Tests/ExtensionInstallerTests/main.swift -o build/stability/ExtensionInstallerTests
 run ExtensionInstallerTests
+xcrun swiftc "${swift[@]}" Sources/Shared/CameraContract.swift Sources/CameraExtension/ProducerAuthorization.swift Tests/ProducerAuthorizationTests/main.swift -o build/stability/ProducerAuthorizationTests
+run ProducerAuthorizationTests
+xcrun swiftc "${swift[@]}" Sources/ControlSupport/ControlStateStore.swift Tests/ControlStateTests/main.swift -o build/stability/ControlStateTests
+run ControlStateTests
 xcrun swiftc "${swift[@]}" Sources/Core/GazeError.swift Sources/Core/CameraLifecycle.swift Sources/Core/CameraPresentation.swift Sources/App/Presentation.swift Tests/PresentationTests/main.swift -o build/stability/PresentationTests
 run PresentationTests
+xcrun swiftc "${swift[@]}" Sources/Core/GazeError.swift Sources/Core/CameraSelection.swift Sources/App/SourceCameraMenu.swift Tests/SourceCameraMenuTests/main.swift -o build/stability/SourceCameraMenuTests
+run SourceCameraMenuTests
 xcrun swiftc "${swift[@]}" -import-objc-header Native/include/LGFramePipeline.h Tests/NativeTests/main.swift "${native[@]}" -o build/stability/NativeTests
 run NativeTests
-echo 'All nine source-only stability suites passed.'
+echo 'All twelve source-only stability suites passed.'
