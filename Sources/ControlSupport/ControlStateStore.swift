@@ -7,19 +7,20 @@ struct ControlStateStore {
     let url: URL
 
     private struct Snapshot: Codable {
-        let active: Bool
+        let mode: GazeMode
         let processID: Int32
     }
 
-    func publish(active: Bool, processID: Int32) throws {
-        let data = try JSONEncoder().encode(Snapshot(active: active, processID: processID))
+    func publish(mode: GazeMode, processID: Int32) throws {
+        let data = try JSONEncoder().encode(Snapshot(mode: mode, processID: processID))
         try data.write(to: url, options: .atomic)
     }
 
-    func isActive(hostIsRunning: (Int32) -> Bool) -> Bool {
+    /// Missing, older or corrupt snapshots and a stopped host all read as Off.
+    func mode(hostIsRunning: (Int32) -> Bool) -> GazeMode {
         guard let data = try? Data(contentsOf: url),
               let snapshot = try? JSONDecoder().decode(Snapshot.self, from: data),
-              snapshot.active else { return false }
-        return hostIsRunning(snapshot.processID)
+              snapshot.mode != .off else { return .off }
+        return hostIsRunning(snapshot.processID) ? snapshot.mode : .off
     }
 }

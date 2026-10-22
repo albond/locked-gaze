@@ -41,7 +41,7 @@ final class CameraPublisherClient: @unchecked Sendable {
                 }
                 // launchd may throttle a service recycled shortly after launch.
                 DispatchQueue.global().asyncAfter(deadline: .now() + 15) {
-                    reply.finish(.failure(GazeError.message("The virtual camera service did not respond. Activate Locked Gaze again.")))
+                    reply.finish(.failure(GazeError.message("The virtual camera service did not respond. Choose the mode again.")))
                 }
               }
             }, onCancel: { self.stop() })
@@ -80,11 +80,11 @@ final class CameraPublisherClient: @unchecked Sendable {
         }
         let reply = ReplyOnce<String?>(done)
         let proxy = connection.remoteObjectProxyWithErrorHandler { _ in
-            reply.finish("The virtual camera connection was interrupted. Activate Locked Gaze again.")
+            reply.finish("The virtual camera connection was interrupted. Choose the mode again.")
         } as! CameraPublisherProtocol
         proxy.send(surface, timestamp: ProcessInfo.processInfo.systemUptime) { reply.finish($0) }
         DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-            reply.finish("The virtual camera stopped responding. Activate Locked Gaze again.")
+            reply.finish("The virtual camera stopped responding. Choose the mode again.")
         }
     }
 

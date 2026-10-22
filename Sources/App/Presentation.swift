@@ -15,7 +15,9 @@ enum AppArtwork {
 // Product support policy; inference benchmarking remains a separate acceptance stage.
 enum PlatformRequirements {
     static let summary = "macOS 14 Sonoma or later"
-    static let processors = "M2 Pro / Max / Ultra or a newer Pro / Max / Ultra chip"
+    // Every tier of this generation and newer is allowed: base, Pro, Max and Ultra.
+    static let minimumChipGeneration = 2
+    static let processors = "Apple M\(minimumChipGeneration) or a newer chip"
     static var chip: String {
         var size = 0
         guard sysctlbyname("machdep.cpu.brand_string", nil, &size, nil, 0) == 0 else { return "Unknown processor" }
@@ -24,14 +26,44 @@ enum PlatformRequirements {
         return String(cString: bytes)
     }
     static func supports(_ name: String) -> Bool {
-        guard let range = name.range(of: #"\bM([0-9]+) (Pro|Max|Ultra)\b"#, options: .regularExpression) else { return false }
-        let model = name[range].split(separator: " ")[0].dropFirst()
-        return (Int(model) ?? 0) >= 2
+        guard let range = name.range(of: #"\bM[0-9]+\b"#, options: .regularExpression),
+              let generation = Int(name[range].dropFirst()) else { return false }
+        return generation >= minimumChipGeneration
+    }
+    static func requireSupported() throws {
+        guard supports(chip) else { throw GazeError.message("Locked Gaze requires \(processors). Detected: \(chip).") }
+    }
+}
+
+enum AppStoreLinks {
+    static let appID = "6814174298"
+    /// Opens the Mac App Store app directly on the review sheet for Locked Gaze.
+    static let writeReview = URL(string: "macappstore://apps.apple.com/app/id\(appID)?action=write-review")!
+}
+
+/// Highlights of the bundled build for What's New. Update them before every release.
+enum ReleaseNotes {
+    struct Item { let symbol: String; let title: String; let detail: String }
+    static let items = [
+        Item(symbol: "switch.2", title: "Three modes",
+             detail: "Off, Pass-through and Locked Gaze: turn correction off without leaving the Locked Gaze camera."),
+        Item(symbol: "widget.small", title: "Widget and Control Center",
+             detail: "Switch modes from a desktop widget or Control Center, where Mode and Camera also picks the source camera."),
+        Item(symbol: "rectangle.split.2x1", title: "Preview",
+             detail: "See your camera and the corrected view side by side before a call."),
+        Item(symbol: "laptopcomputer", title: "More Macs",
+             detail: "Runs on Apple M2 and newer chips, including MacBook Air."),
+    ]
+    /// Once after an update; never on a first install or after a downgrade.
+    static func shouldShow(lastLaunched: String?, current: String, launchedBefore: Bool) -> Bool {
+        guard let lastLaunched else { return launchedBefore }
+        return current.compare(lastLaunched, options: .numeric) == .orderedDescending
     }
 }
 
 enum MenuIcon {
-    static func image(active: Bool) -> NSImage {
+    /// Off: outlined iris. Pass-through: outlined iris with a pupil. Locked Gaze: filled iris.
+    static func image(mode: GazeMode) -> NSImage {
         let image = NSImage(size: NSSize(width: 22, height: 18), flipped: false) { _ in
             NSColor.black.set()
             let eye = NSBezierPath()
@@ -40,15 +72,21 @@ enum MenuIcon {
             eye.curve(to: NSPoint(x: 2, y: 9), controlPoint1: NSPoint(x: 15, y: 1), controlPoint2: NSPoint(x: 7, y: 1))
             eye.close(); eye.lineWidth = 1.5; eye.lineJoinStyle = .round; eye.stroke()
             let iris = NSBezierPath(ovalIn: NSRect(x: 7.5, y: 5.5, width: 7, height: 7))
-            if active { iris.fill() } else { iris.lineWidth = 1.4; iris.stroke() }
-            if active {
+            switch mode {
+            case .off:
+                iris.lineWidth = 1.4; iris.stroke()
+            case .passThrough:
+                iris.lineWidth = 1.4; iris.stroke()
+                NSBezierPath(ovalIn: NSRect(x: 9.6, y: 7.6, width: 2.8, height: 2.8)).fill()
+            case .lockedGaze:
+                iris.fill()
                 NSGraphicsContext.current?.compositingOperation = .clear
                 NSBezierPath(ovalIn: NSRect(x: 9, y: 9, width: 2, height: 2)).fill()
             }
             return true
         }
         image.isTemplate = true
-        image.accessibilityDescription = active ? "Locked Gaze active" : "Locked Gaze inactive"
+        image.accessibilityDescription = "Locked Gaze \(mode.title)"
         return image
     }
 }
@@ -63,21 +101,24 @@ enum CandyTheme {
                            blue: CGFloat(value & 255) / 255, alpha: 1)
         }
     }
-    static let window = adaptive("CandyWindow", light: 0xFFF8F3, dark: 0x281F2C)
+    static let window = adaptive("CandyWindow", light: 0xFFF8F4, dark: 0x1E1D1D)
     static let background = Color(nsColor: window)
-    static let text = Color(nsColor: adaptive("CandyText", light: 0x402A3F, dark: 0xFFF1E9))
-    static let secondary = Color(nsColor: adaptive("CandySecondary", light: 0x755B70, dark: 0xCFB9CB))
-    static let surface = Color(nsColor: adaptive("CandySurface", light: 0xFFFDFC, dark: 0x382B3D))
-    static let blush = Color(nsColor: adaptive("CandyBlush", light: 0xFBE0E6, dark: 0x503347))
-    static let lavender = Color(nsColor: adaptive("CandyLavender", light: 0xEEE2F5, dark: 0x3B2F4A))
-    static let accent = Color(nsColor: adaptive("CandyAccent", light: 0x9B4265, dark: 0xF3B4CF))
-    static let buttonText = Color(nsColor: adaptive("CandyButtonText", light: 0xFFFFFF, dark: 0x382338))
-    static let line = Color(nsColor: adaptive("CandyLine", light: 0xE8CFDC, dark: 0x705466))
+    static let text = Color(nsColor: adaptive("CandyText", light: 0x1F1D1C, dark: 0xFFF5EF))
+    static let secondary = Color(nsColor: adaptive("CandySecondary", light: 0x6B625D, dark: 0xC9BFBA))
+    static let surface = Color(nsColor: adaptive("CandySurface", light: 0xFFFDFB, dark: 0x2A2827))
+    static let blush = Color(nsColor: adaptive("CandyBlush", light: 0xFFE3D3, dark: 0x2E2522))
+    static let apricot = Color(nsColor: adaptive("CandyApricot", light: 0xFDEADF, dark: 0x242121))
+    /// The peach of the orange AirPods Max. It is a fill: text and symbols on it are dark.
+    static let accent = Color(nsColor: adaptive("CandyAccent", light: 0xF7A982, dark: 0xF7A982))
+    /// The accent for symbols on light surfaces, where the peach fill is too pale to read.
+    static let accentInk = Color(nsColor: adaptive("CandyAccentInk", light: 0xE57B4F, dark: 0xF7A982))
+    static let buttonText = Color(nsColor: adaptive("CandyButtonText", light: 0x1F1D1C, dark: 0x1F1D1C))
+    static let line = Color(nsColor: adaptive("CandyLine", light: 0xF2D9CB, dark: 0x45403D))
 }
 
 struct CandyBackground: View {
     var body: some View {
-        LinearGradient(colors: [CandyTheme.blush, CandyTheme.background, CandyTheme.lavender],
+        LinearGradient(colors: [CandyTheme.blush, CandyTheme.background, CandyTheme.apricot],
                        startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 }
@@ -143,7 +184,7 @@ struct PermissionView: View {
                 .frame(maxWidth: .infinity)
         }
         .padding(28).frame(width: 440)
-        .foregroundStyle(CandyTheme.text).tint(CandyTheme.accent)
+        .foregroundStyle(CandyTheme.text).tint(CandyTheme.accentInk)
         .background(CandyBackground())
     }
 }
@@ -210,7 +251,7 @@ struct AboutView: View {
             }
         }
         .padding(32).frame(width: 460)
-        .foregroundStyle(CandyTheme.text).tint(CandyTheme.accent)
+        .foregroundStyle(CandyTheme.text).tint(CandyTheme.accentInk)
         .background(CandyBackground())
     }
 

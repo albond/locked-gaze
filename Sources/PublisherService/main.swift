@@ -18,8 +18,14 @@ final class PublisherService: NSObject, CameraPublisherProtocol, NSXPCListenerDe
         return true
     }
     func start(reply: @escaping (Int, String?, Int32) -> Void) {
-        DispatchQueue.main.async {
-            do { try self.publisher.start(); reply(0, nil, getpid()) }
+        // A new camera extension publishes its device after this process starts, and
+        // launchd defers relaunching the service by 10 s, so keep looking here first.
+        // The wait must not block the main queue: CMIO delivers device arrivals on it.
+        Task { @MainActor in
+            do {
+                try await StartupRetry.run(deadline: CameraContract.publisherDiscoveryWindow) { try self.publisher.start() }
+                reply(0, nil, getpid())
+            }
             catch is CameraConnectionError { reply(1, nil, getpid()) }
             catch { reply(2, error.localizedDescription, getpid()) }
         }

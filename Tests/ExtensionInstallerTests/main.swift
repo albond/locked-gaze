@@ -28,6 +28,21 @@ import SystemExtensions
         while submitted.count < 4 { await Task.yield() }
         installer.request(submitted[3], didFinishWithResult: .willCompleteAfterReboot)
         do { try await reboot.value; preconditionFailure() } catch { precondition(error.localizedDescription.contains("Restart")) }
+        // Error 10: a device-management policy forbids the extension. Settings cannot fix it,
+        // so it must not open the approval check; it explains the policy instead, and a later
+        // attempt submits a new request.
+        let forbidden = Task { try await installer.activate() }
+        while submitted.count < 5 { await Task.yield() }
+        installer.request(submitted[4], didFailWithError: OSSystemExtensionError(.forbiddenBySystemPolicy))
+        do { try await forbidden.value; preconditionFailure() }
+        catch is ExtensionInstaller.ApprovalError { preconditionFailure("Policy denial opened the approval check") }
+        catch { precondition(error.localizedDescription.contains("IT administrator") && error.localizedDescription.contains(CameraContract.extensionID)) }
+        precondition(ExtensionInstaller.policyMessage(team: "TEAM123456").contains("from team TEAM123456"))
+        precondition(!ExtensionInstaller.policyMessage(team: nil).contains("from team"))
+        let later = Task { try await installer.activate() }
+        while submitted.count < 6 { await Task.yield() }
+        installer.request(submitted[5], didFinishWithResult: .completed)
+        try await later.value
         let unsigned = ExtensionInstaller(submit: { _ in preconditionFailure("Unsigned build submitted installation") }, unsignedBuild: { true })
         do { try await unsigned.activate(); preconditionFailure() } catch {}
         // Regression: Settings enabled the extension, but activation completion
@@ -49,6 +64,6 @@ import SystemExtensions
         try await alreadyEnabled.activate()
         try await alreadyEnabled.activate()
         print("PASS: approval succeeds even when the original completion callback never arrives")
-        print("PASS: extension approval, pending recheck, approved retry, stale/double callbacks, OS failure, reboot required, unsigned build")
+        print("PASS: extension approval, pending recheck, approved retry, stale/double callbacks, OS failure, system policy denial (error 10), reboot required, unsigned build")
     }
 }

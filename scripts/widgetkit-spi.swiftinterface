@@ -1,0 +1,27 @@
+
+// Appended to the SDK's WidgetKit interface by build-widgetkit-overlay.sh. WidgetKit exports
+// these symbols but leaves them out of its public interface. ControlWidgetSize is returned
+// indirectly (resilient), so the declarations match the binary without knowing its layout.
+// macOS 26.5 is the earliest SDK that lists them; callers must check availability, so an
+// older system never touches the weakly linked symbols.
+@available(macOS 26.5, *)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+public struct ControlWidgetSize : Swift.Equatable {
+  public static var small: WidgetKit.ControlWidgetSize { get }
+  public static var medium: WidgetKit.ControlWidgetSize { get }
+  public static func medium(vertical: Swift.Bool) -> WidgetKit.ControlWidgetSize
+  public static var large: WidgetKit.ControlWidgetSize { get }
+  public static func == (a: WidgetKit.ControlWidgetSize, b: WidgetKit.ControlWidgetSize) -> Swift.Bool
+}
+@available(macOS 26.5, *)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+@available(visionOS, unavailable)
+extension SwiftUI.ControlWidgetConfiguration {
+  @_Concurrency.MainActor @preconcurrency public func preferredControlSize(_ size: WidgetKit.ControlWidgetSize) -> some SwiftUI.ControlWidgetConfiguration
+
+}

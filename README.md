@@ -13,9 +13,9 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/Source_license-MIT-blue?style=flat-square" alt="Source code license: MIT"></a>
   <a href="#download-for-mac"><img src="https://img.shields.io/badge/macOS-14%2B-000?logo=apple&amp;logoColor=white&amp;style=flat-square" alt="macOS 14 or later"></a>
-  <a href="#download-for-mac"><img src="https://img.shields.io/badge/Apple_Silicon-Pro_%2F_Max_%2F_Ultra-555?logo=apple&amp;logoColor=white&amp;style=flat-square" alt="Apple Silicon Pro, Max, or Ultra; see requirements"></a>
+  <a href="#download-for-mac"><img src="https://img.shields.io/badge/Apple_Silicon-M2_or_newer-555?logo=apple&amp;logoColor=white&amp;style=flat-square" alt="Apple Silicon M2 or newer; see requirements"></a>
   <a href="https://developer.apple.com/documentation/swiftui"><img src="https://img.shields.io/badge/SwiftUI-%2B%20AppKit-1F6FEB?style=flat-square" alt="SwiftUI and AppKit"></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/Source-1.0.1-8A63D2?style=flat-square" alt="Source version 1.0.1 — see what's new"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/Source-1.1.0-E57B4F?style=flat-square" alt="Source version 1.1.0 — see what's new"></a>
 </p>
 
 <p align="center">
@@ -32,21 +32,23 @@
 
 Reading notes, following a presentation, or watching the person on screen can pull your gaze away from the camera. Locked Gaze helps bring it back, so you can focus on what you want to say.
 
-*Illustrated product previews. The manga artwork is sample imagery, not a processed camera frame or an avatar feature.*
+*Real screenshots of Locked Gaze 1.1.0. The camera shows a sample video.*
 
-![Illustrated comparison: with correction off the character looks away; with correction on her gaze points toward the camera.](Resources/Screenshots/04-correction-off-on.png)
+![Preview window: in the original camera view on the left she looks down; in the Locked Gaze view on the right she looks at the camera.](Resources/Screenshots/01-preview.jpg)
 
 ## Your conversation, your Mac
 
 Your camera frames stay on your Mac. Eye-contact correction runs entirely on your device, without uploading video for processing. Locked Gaze does not record your camera feed.
 
-![On-device, private, offline, and free: no hidden payments or subscriptions.](Resources/Screenshots/05-benefits-readme.png)
+![About Locked Gaze: on-device, private and offline. Your camera frames stay on your Mac, with no video uploads and no camera recordings.](Resources/Screenshots/05-privacy.jpg)
 
 ## A small app with a clear purpose
 
 - **Eye contact, with less effort.** Gaze correction designed for conversations, presentations, and interviews.
-- **A home in your menu bar.** Turn correction on when you need it and off when you are done.
-- **One click from Control Center.** On macOS 26 or later, add the Locked Gaze control to turn correction on or off.
+- **A home in your menu bar.** Switch between Off, Pass-through, and Locked Gaze whenever you like.
+- **Pass-through when you need it.** Keep the Locked Gaze camera in a call and send your original video, with no camera switch.
+- **One click from Control Center or the desktop.** On macOS 26 or later, add the Locked Gaze, Pass-through, and Locked Gaze Off controls side by side, add Mode and Camera for a panel with a three-way switch and your cameras, or put the Locked Gaze widget on your desktop.
+- **See it before your call.** Preview shows your camera and the corrected view side by side, without starting a meeting. Nothing is recorded.
 - **Your choice of camera.** Select a webcam or use your iPhone through Continuity Camera.
 - **A camera you can select.** Choose **Locked Gaze** in video apps that support macOS virtual cameras.
 - **Made for Apple Silicon.** Local processing built around your Mac.
@@ -56,16 +58,20 @@ Your camera frames stay on your Mac. Eye-contact correction runs entirely on you
 After granting camera access and enabling the camera extension:
 
 1. Keep **Automatic (System Preferred)** selected, or choose your source camera in Locked Gaze.
-2. Click **Activate** in the menu bar.
+2. Choose **Locked Gaze** in the menu bar.
 3. Select **Locked Gaze** as the camera in your video app.
 
-Click **Deactivate** whenever you want to stop processing.
+Choose **Pass-through** to send your original video without leaving the Locked Gaze camera, or **Off** to stop the camera.
+
+![The Locked Gaze menu in the menu bar: Off, Pass-through and Locked Gaze, then Source Camera and Preview.](Resources/Screenshots/02-menu.jpg)
 
 ## One click from Control Center
 
-On **macOS 26 or later**, add the **Locked Gaze** control to Control Center. After the initial camera setup, click it whenever you want to turn eye-contact correction on or off. You can also keep using the menu-bar control.
+On **macOS 26 or later**, add the **Locked Gaze**, **Pass-through**, and **Locked Gaze Off** controls to Control Center and place them side by side: the lit control shows the current mode, and clicking another one switches to it. **Mode and Camera** opens a panel with a three-way switch and the list of source cameras. The **Locked Gaze** desktop widget offers the same three-way switch in light, dark, tinted, and clear styles. You can also keep using the menu bar.
 
-![Illustrated character pressing the Locked Gaze Control Center button: turn correction on or off on macOS 26 or later.](Resources/Screenshots/06-control-center.png)
+![Control Center with the Off, Pass-through and Locked Gaze controls and the Mode and Camera button, next to its panel with the mode switch and source cameras.](Resources/Screenshots/03-control-center.jpg)
+
+![The Locked Gaze widget on the desktop, next to the Calendar widgets, showing On with the Locked Gaze position selected.](Resources/Screenshots/04-widget.jpg)
 
 ## Download for Mac
 
@@ -73,11 +79,11 @@ Locked Gaze is available **free on the Mac App Store**. Download the ready-to-us
 
 [Download Locked Gaze on the Mac App Store](https://apps.apple.com/app/id6814174298)
 
-[What's new in 1.0.1](CHANGELOG.md#101): more reliable virtual camera activation, better Control Center sync, and clearer default camera selection. The source version badge refers to this repository; the App Store page shows the version currently available to download.
+[What's new in 1.1.0](CHANGELOG.md#110): three modes with Pass-through, Control Center controls and a Mode and Camera panel, a desktop widget, Preview, support for Apple M2 and newer chips including MacBook Air, and a new look. The source version badge refers to this repository; the App Store page shows the version currently available to download.
 
 [Follow Locked Gaze on GitHub](https://github.com/albond/locked-gaze) and give it a star to bookmark the project. The source edition includes the native application and model interface specifications. Model weights are not included; building a working gaze-correction app requires compatible models supplied separately.
 
-Requires **macOS 14 Sonoma or later**, with **M2 Pro / Max / Ultra or a newer Pro / Max / Ultra chip**. Camera access and approval of the Locked Gaze camera extension are required.
+Requires **macOS 14 Sonoma or later** and an **Apple M2 or newer chip**, including base, Pro, Max, and Ultra models. Camera access and approval of the Locked Gaze camera extension are required.
 
 ## Support the project
 

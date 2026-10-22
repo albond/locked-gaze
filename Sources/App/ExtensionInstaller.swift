@@ -63,6 +63,12 @@ final class ExtensionInstaller: NSObject, @preconcurrency OSSystemExtensionReque
             return
         }
         guard request === self.request else { return }
+        // Error 10: the organization's device management does not allow this extension.
+        // Settings cannot change that, so name what the IT administrator has to allow.
+        if (error as? OSSystemExtensionError)?.code == .forbiddenBySystemPolicy {
+            complete(.failure(GazeError.message(Self.policyMessage(team: Self.teamID))))
+            return
+        }
         complete(.failure(error))
     }
     func currentExtensionEnabled() async throws -> Bool {
@@ -83,6 +89,14 @@ final class ExtensionInstaller: NSObject, @preconcurrency OSSystemExtensionReque
         let pending = propertiesContinuation
         propertiesContinuation = nil; propertiesRequest = nil
         pending?.resume(returning: enabled)
+    }
+    static func policyMessage(team: String?) -> String {
+        let source = team.map { " from team \($0)" } ?? ""
+        return "Your organization's policy for this Mac blocks the Locked Gaze camera extension, so other apps can't use the Locked Gaze camera. Ask your IT administrator to allow the system extension \(CameraContract.extensionID)\(source). Preview still works."
+    }
+    /// The signing team, from the App Group name "<team>.local.lockedgaze.app".
+    private static var teamID: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "LGAppGroup") as? String)?.split(separator: ".").first.map(String.init)
     }
     private func complete(_ result: Result<Void, Error>) {
         let pending = continuation; continuation = nil; request = nil; pending?.resume(with: result)

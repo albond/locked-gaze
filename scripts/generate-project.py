@@ -22,7 +22,8 @@ source_refs={}
 for path in sorted([*root.glob('Sources/**/*.swift'),*root.glob('Native/*.mm')]):
     relative=str(path.relative_to(root));ref=file(relative,'sourcecode.swift' if path.suffix=='.swift' else 'sourcecode.cpp.objcpp');children.append(ref);source_refs[relative]=ref
 models=file('build/Models','folder');children.append(models)
-icon=file('build/AppIcon.icns','image.icns');children.append(icon)
+# Icon Composer document: actool compiles it into Assets.car (Liquid Glass on macOS 26+) and AppIcon.icns.
+icon=file('Resources/AppIcon.icon','folder.iconcomposer.icon');children.append(icon)
 for p in ['Native/include/LGFramePipeline.h','Config/App.entitlements','Config/Camera.entitlements','Config/App-Info.plist','Config/Camera-Info.plist','Config/Publisher-Info.plist','Config/Publisher.entitlements']:
     children.append(file(p,'sourcecode.c.h' if p.endswith('.h') else 'text.plist.xml'))
 group=add('root-group','PBXGroup',sourceTree='<group>',children=children+[products])
@@ -35,7 +36,7 @@ def configs(name,settings):
     return add(name+'configs','XCConfigurationList',buildConfigurations=configurations,defaultConfigurationIsVisible='0',defaultConfigurationName='Release')
 project_configs=configs('project-',{})
 common=dict(PRODUCT_NAME='$(TARGET_NAME)',SWIFT_EMIT_LOC_STRINGS='NO',COMBINE_HIDPI_IMAGES='YES')
-app_settings=dict(common,PRODUCT_NAME='Locked Gaze',PRODUCT_BUNDLE_IDENTIFIER='local.lockedgaze.app',INFOPLIST_FILE='Config/App-Info.plist',CODE_SIGN_ENTITLEMENTS='Config/App.entitlements',
+app_settings=dict(common,PRODUCT_NAME='Locked Gaze',ASSETCATALOG_COMPILER_APPICON_NAME='AppIcon',PRODUCT_BUNDLE_IDENTIFIER='local.lockedgaze.app',INFOPLIST_FILE='Config/App-Info.plist',CODE_SIGN_ENTITLEMENTS='Config/App.entitlements',
     SWIFT_OBJC_BRIDGING_HEADER='Native/include/LGFramePipeline.h',HEADER_SEARCH_PATHS=['$(inherited)','$(SRCROOT)/Native/include','$(SRCROOT)/build/deps/opencv/include/opencv4'],
     LIBRARY_SEARCH_PATHS=['$(inherited)','$(SRCROOT)/build/deps/opencv/lib','$(SRCROOT)/build/deps/opencv/lib/opencv4/3rdparty'],
     OTHER_LDFLAGS=['$(inherited)','-lopencv_calib3d','-lopencv_features2d','-lopencv_flann','-lopencv_imgproc','-lopencv_core','-ltegra_hal','-lc++','-lz','-framework','Accelerate'],
@@ -53,15 +54,17 @@ proxy=add('extension-proxy','PBXContainerItemProxy',containerPortal=project,prox
 dependency=add('extension-dependency','PBXTargetDependency',target=extension,targetProxy=proxy)
 embed_file=add('embed-extension-file','PBXBuildFile',fileRef=ext_product,settings={'ATTRIBUTES':['CodeSignOnCopy','RemoveHeadersOnCopy']})
 embed=add('embed-extension','PBXCopyFilesBuildPhase',buildActionMask='2147483647',dstPath='$(CONTENTS_FOLDER_PATH)/Library/SystemExtensions',dstSubfolderSpec='16',files=[embed_file],name='Embed Camera Extension',runOnlyForDeploymentPostprocessing='0')
-controls_settings=dict(common,PRODUCT_NAME='LockedGazeControls',PRODUCT_BUNDLE_IDENTIFIER='local.lockedgaze.app.controls',INFOPLIST_FILE='Config/Controls-Info.plist',CODE_SIGN_ENTITLEMENTS='Config/Controls.entitlements',SKIP_INSTALL='YES',ENABLE_APP_SANDBOX='YES',APPLICATION_EXTENSION_API_ONLY='YES',MACOSX_DEPLOYMENT_TARGET='26.0')
-controls_sources=sources('controls-',lambda p:p.startswith(('Sources/Controls/','Sources/ControlSupport/')))
-# Generate independently of the host resource phase, including clean parallel builds.
-controls_icon=add('controls-icon','PBXShellScriptBuildPhase',buildActionMask='2147483647',files=[],name='Prepare Controls app icon',shellPath='/bin/bash',shellScript='bash "$SRCROOT/scripts/build-icon.sh" "$DERIVED_FILE_DIR/ControlsIcon"\nmkdir -p "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH"\ncp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/AppIcon.icns"\n',inputPaths=['$(SRCROOT)/Resources/AppIcon.png','$(SRCROOT)/scripts/build-icon.sh'],outputPaths=['$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/AppIcon.icns'],runOnlyForDeploymentPostprocessing='0')
+controls_settings=dict(common,PRODUCT_NAME='LockedGazeControls',ASSETCATALOG_COMPILER_APPICON_NAME='AppIcon',PRODUCT_BUNDLE_IDENTIFIER='local.lockedgaze.app.controls',INFOPLIST_FILE='Config/Controls-Info.plist',CODE_SIGN_ENTITLEMENTS='Config/Controls.entitlements',SKIP_INSTALL='YES',ENABLE_APP_SANDBOX='YES',APPLICATION_EXTENSION_API_ONLY='YES',MACOSX_DEPLOYMENT_TARGET='14.0',SWIFT_INCLUDE_PATHS=['$(inherited)','$(DERIVED_FILE_DIR)/WidgetKitSPI'])
+controls_sources=sources('controls-',lambda p:p.startswith(('Sources/Controls/','Sources/ControlSupport/')) or p=='Sources/Core/GazeMode.swift')
+controls_icon=add('controls-icon','PBXResourcesBuildPhase',buildActionMask='2147483647',files=[add('controls-icon-resource','PBXBuildFile',fileRef=icon)],runOnlyForDeploymentPostprocessing='0')
+# WidgetKit exports the control size API without publishing it; see scripts/widgetkit-spi.swiftinterface.
+widgetkit_interface='$(SDKROOT)/System/Library/Frameworks/WidgetKit.framework/Versions/A/Modules/WidgetKit.swiftmodule/arm64e-apple-macos.swiftinterface'
+controls_spi=add('controls-spi','PBXShellScriptBuildPhase',buildActionMask='2147483647',files=[],name='Prepare WidgetKit control size declarations',shellPath='/bin/bash',shellScript='bash "$SRCROOT/scripts/build-widgetkit-overlay.sh" "$DERIVED_FILE_DIR/WidgetKitSPI"\n',inputPaths=['$(SRCROOT)/scripts/build-widgetkit-overlay.sh','$(SRCROOT)/scripts/widgetkit-spi.swiftinterface',widgetkit_interface],outputPaths=['$(DERIVED_FILE_DIR)/WidgetKitSPI/WidgetKit.swiftmodule/arm64e-apple-macos.swiftinterface'],runOnlyForDeploymentPostprocessing='0')
 controls_proxy=add('controls-proxy','PBXContainerItemProxy',containerPortal=project,proxyType='1',remoteGlobalIDString=controls,remoteInfo='LockedGazeControls')
 controls_dependency=add('controls-dependency','PBXTargetDependency',target=controls,targetProxy=controls_proxy)
 controls_embed_file=add('embed-controls-file','PBXBuildFile',fileRef=controls_product,settings={'ATTRIBUTES':['RemoveHeadersOnCopy']})
 controls_embed=add('embed-controls','PBXCopyFilesBuildPhase',buildActionMask='2147483647',dstPath='',dstSubfolderSpec='13',files=[controls_embed_file],name='Embed Controls',runOnlyForDeploymentPostprocessing='0')
-add('controls','PBXNativeTarget',name='LockedGazeControls',productName='LockedGazeControls',productType='com.apple.product-type.app-extension',productReference=controls_product,buildConfigurationList=configs('controls-',controls_settings),buildPhases=[controls_sources,controls_icon],buildRules=[],dependencies=[])
+add('controls','PBXNativeTarget',name='LockedGazeControls',productName='LockedGazeControls',productType='com.apple.product-type.app-extension',productReference=controls_product,buildConfigurationList=configs('controls-',controls_settings),buildPhases=[controls_spi,controls_sources,controls_icon],buildRules=[],dependencies=[])
 publisher_settings=dict(common,PRODUCT_NAME='LockedGazePublisher',PRODUCT_BUNDLE_IDENTIFIER='local.lockedgaze.app.publisher',INFOPLIST_FILE='Config/Publisher-Info.plist',CODE_SIGN_ENTITLEMENTS='Config/Publisher.entitlements',SKIP_INSTALL='YES')
 publisher_sources=sources('publisher-',lambda p:p.startswith(('Sources/PublisherService/','Sources/PublisherIPC/')) or p in ['Sources/Shared/CameraContract.swift','Sources/Core/GazeError.swift','Sources/Core/StartupRetry.swift'])
 publisher_proxy=add('publisher-proxy','PBXContainerItemProxy',containerPortal=project,proxyType='1',remoteGlobalIDString=publisher,remoteInfo='LockedGazePublisher')
@@ -76,10 +79,15 @@ add('extension','PBXNativeTarget',name='LockedGazeCamera',productName='local.loc
 add('project','PBXProject',attributes={'LastUpgradeCheck':'2700','BuildIndependentTargetsInParallel':'YES'},buildConfigurationList=project_configs,compatibilityVersion='Xcode 14.0',developmentRegion='en',hasScannedForEncodings='0',knownRegions=['en','Base'],mainGroup=group,productRefGroup=products,projectDirPath='',projectRoot='',targets=[app,extension,controls,publisher])
 directory=root/'LockedGaze.xcodeproj';directory.mkdir(exist_ok=True)
 (directory/'project.pbxproj').write_bytes(plistlib.dumps(dict(archiveVersion='1',classes={},objectVersion='56',objects=objects,rootObject=project),sort_keys=False))
+# The camera extension keeps its own version, 1.0.1 (15) as shipped. macOS replaces an installed
+# camera extension whenever this changes, and Core Media I/O can then leave no camera running
+# until a restart. Change it only when installed Macs must
+# receive a new extension.
+versions={'APPL':('1.1.0','30'),'SYSX':('1.0.1','15')}
 for filename,identifier,kind in [('App-Info.plist','local.lockedgaze.app','APPL'),('Camera-Info.plist','local.lockedgaze.app.camera','SYSX')]:
-    info=dict(CFBundleIdentifier='$(PRODUCT_BUNDLE_IDENTIFIER)',CFBundleExecutable='$(EXECUTABLE_NAME)',CFBundleName='Locked Gaze',CFBundleDisplayName='Locked Gaze',CFBundlePackageType=kind,CFBundleVersion='15',CFBundleShortVersionString='1.0.1',LSMinimumSystemVersion='$(MACOSX_DEPLOYMENT_TARGET)',NSSystemExtensionUsageDescription='Locked Gaze supplies processed video to other camera apps.')
-    if kind=='APPL':info.update(LSApplicationCategoryType="public.app-category.photography",CFBundleIconFile="AppIcon",CFBundleDevelopmentRegion="en",LGAppGroup="$(TeamIdentifierPrefix)local.lockedgaze.app",LSUIElement=True,NSCameraUsageDescription='Locked Gaze corrects your gaze locally on this Mac.',NSCameraUseContinuityCameraDeviceType=True,NSHighResolutionCapable=True)
-    else:info.update(CFBundleVersion='15',CMIOExtension={'CMIOExtensionMachServiceName':'$(TeamIdentifierPrefix)$(PRODUCT_BUNDLE_IDENTIFIER)'})
+    info=dict(CFBundleIdentifier='$(PRODUCT_BUNDLE_IDENTIFIER)',CFBundleExecutable='$(EXECUTABLE_NAME)',CFBundleName='Locked Gaze',CFBundleDisplayName='Locked Gaze',CFBundlePackageType=kind,CFBundleVersion=versions[kind][1],CFBundleShortVersionString=versions[kind][0],LSMinimumSystemVersion='$(MACOSX_DEPLOYMENT_TARGET)',NSSystemExtensionUsageDescription='Locked Gaze supplies processed video to other camera apps.')
+    if kind=="APPL":info.update(LSApplicationCategoryType="public.app-category.photography",ITSAppUsesNonExemptEncryption=False,CFBundleIconFile="AppIcon",CFBundleDevelopmentRegion="en",LGAppGroup="$(TeamIdentifierPrefix)local.lockedgaze.app",LSUIElement=True,NSCameraUsageDescription='Locked Gaze corrects your gaze locally on this Mac.',NSCameraUseContinuityCameraDeviceType=True,NSHighResolutionCapable=True)
+    else:info.update(CMIOExtension={'CMIOExtensionMachServiceName':'$(TeamIdentifierPrefix)$(PRODUCT_BUNDLE_IDENTIFIER)'})
     (root/'Config'/filename).write_bytes(plistlib.dumps(info))
 scheme=ET.Element('Scheme',LastUpgradeVersion='2700',version='1.3')
 build=ET.SubElement(scheme,'BuildAction',parallelizeBuildables='YES',buildImplicitDependencies='YES')

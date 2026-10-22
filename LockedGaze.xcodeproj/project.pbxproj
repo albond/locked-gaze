@@ -125,6 +125,17 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.swift</string>
 		</dict>
+		<key>01AA07C18EAF8735CC10890B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/App/ModePanel.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
 		<key>DED429E8F9208C8118435C41</key>
 		<dict>
 			<key>isa</key>
@@ -147,12 +158,34 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.swift</string>
 		</dict>
+		<key>A0F20A5905DB785DE1FFC52C</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/App/PreviewWindow.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
 		<key>E26D999A86947B67F4844FA6</key>
 		<dict>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>path</key>
 			<string>Sources/App/SourceCameraMenu.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
+		<key>3FD2EF1C423471ECC041F1FF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/App/WhatsNewWindow.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 			<key>lastKnownFileType</key>
@@ -235,6 +268,17 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.swift</string>
 		</dict>
+		<key>88D86294FCD5D7D23E145670</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/Controls/ModeWidget.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
 		<key>4B324CCB000D3A0BEEA02CE8</key>
 		<dict>
 			<key>isa</key>
@@ -279,6 +323,28 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.swift</string>
 		</dict>
+		<key>ECA09BEED71AD8FC5EAF5BDF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/Core/GazeMode.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
+		<key>7A01592181A3F4FBF3049627</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/Core/GazeModeController.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
 		<key>AE696CA84B06F317EAB1311D</key>
 		<dict>
 			<key>isa</key>
@@ -318,6 +384,28 @@
 			<string>PBXFileReference</string>
 			<key>path</key>
 			<string>Sources/Core/PermissionGate.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
+		<key>84930ED7328608B7919E215A</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/Core/PixelCopy.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
+		<key>19BAFDCDB4C92FAE0F60F318</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/Core/PreviewFeed.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 			<key>lastKnownFileType</key>
@@ -411,16 +499,16 @@
 			<key>lastKnownFileType</key>
 			<string>folder</string>
 		</dict>
-		<key>8D1C0C012D50DEEAE4F57C23</key>
+		<key>EF7201C16721CEAF3B2ABAB8</key>
 		<dict>
 			<key>isa</key>
 			<string>PBXFileReference</string>
 			<key>path</key>
-			<string>build/AppIcon.icns</string>
+			<string>Resources/AppIcon.icon</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 			<key>lastKnownFileType</key>
-			<string>image.icns</string>
+			<string>folder.iconcomposer.icon</string>
 		</dict>
 		<key>11B70C8AE80489B974636C11</key>
 		<dict>
@@ -512,9 +600,12 @@
 				<string>116EC12D2EA3220EC03C8998</string>
 				<string>3075A9D7F6CC5000BD750822</string>
 				<string>CCB001D5E9CF861EC8CE202C</string>
+				<string>01AA07C18EAF8735CC10890B</string>
 				<string>DED429E8F9208C8118435C41</string>
 				<string>A2DC7F627C51D09FD53F9A13</string>
+				<string>A0F20A5905DB785DE1FFC52C</string>
 				<string>E26D999A86947B67F4844FA6</string>
+				<string>3FD2EF1C423471ECC041F1FF</string>
 				<string>AF086B9EDF5D21B7535C7202</string>
 				<string>8E00FA504E47B2EE67AC6581</string>
 				<string>3901E9379DB363554E85E331</string>
@@ -522,14 +613,19 @@
 				<string>F69629B2B78ECDDEFFD61CD1</string>
 				<string>448BBD263BB57919E843D915</string>
 				<string>B60FAC0CDFDC6B7FD6ADAC90</string>
+				<string>88D86294FCD5D7D23E145670</string>
 				<string>4B324CCB000D3A0BEEA02CE8</string>
 				<string>49D65FB831A4BEEC3B82DC07</string>
 				<string>45793160F525BC71776FB449</string>
 				<string>295F831CF5309F9359F2D1A8</string>
+				<string>ECA09BEED71AD8FC5EAF5BDF</string>
+				<string>7A01592181A3F4FBF3049627</string>
 				<string>AE696CA84B06F317EAB1311D</string>
 				<string>CFDD214C47E5EEC12C5BA545</string>
 				<string>B76A32123B3915E8ADE47294</string>
 				<string>B6516958672FB05CB8EB6DD0</string>
+				<string>84930ED7328608B7919E215A</string>
+				<string>19BAFDCDB4C92FAE0F60F318</string>
 				<string>077E5BC3D4F9DC7A5BD13DC1</string>
 				<string>B8367F4A6FE61C8936B4F8CF</string>
 				<string>BB73BA3382CDDC546EA63603</string>
@@ -538,7 +634,7 @@
 				<string>23DF8ED8F6D6707CABAACB3B</string>
 				<string>C112E5505A3E712CCC5A5201</string>
 				<string>1E97B59266506C232C9DC5B9</string>
-				<string>8D1C0C012D50DEEAE4F57C23</string>
+				<string>EF7201C16721CEAF3B2ABAB8</string>
 				<string>11B70C8AE80489B974636C11</string>
 				<string>6B7C5F8432B968C375C9E6E7</string>
 				<string>EA2A48B74AC827CA6A3DF1B8</string>
@@ -647,6 +743,13 @@
 			<key>fileRef</key>
 			<string>CCB001D5E9CF861EC8CE202C</string>
 		</dict>
+		<key>4C17D5CDFC900AB3BCDE412B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>01AA07C18EAF8735CC10890B</string>
+		</dict>
 		<key>9D4D007F1CCD8097A6423E97</key>
 		<dict>
 			<key>isa</key>
@@ -661,12 +764,26 @@
 			<key>fileRef</key>
 			<string>A2DC7F627C51D09FD53F9A13</string>
 		</dict>
+		<key>D017671ACA2CD874E6F167A7</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>A0F20A5905DB785DE1FFC52C</string>
+		</dict>
 		<key>1D374634814F22C287F61CCF</key>
 		<dict>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
 			<string>E26D999A86947B67F4844FA6</string>
+		</dict>
+		<key>09F4F72A66159EE0D5F10284</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>3FD2EF1C423471ECC041F1FF</string>
 		</dict>
 		<key>884EA16F46192369BE17EE08</key>
 		<dict>
@@ -717,6 +834,20 @@
 			<key>fileRef</key>
 			<string>295F831CF5309F9359F2D1A8</string>
 		</dict>
+		<key>82070004DAB4C3A1AF843F74</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>ECA09BEED71AD8FC5EAF5BDF</string>
+		</dict>
+		<key>320F1C6D17211381E42AC9A9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>7A01592181A3F4FBF3049627</string>
+		</dict>
 		<key>1D640AE2FEFE08BFC49220BA</key>
 		<dict>
 			<key>isa</key>
@@ -744,6 +875,20 @@
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
 			<string>B6516958672FB05CB8EB6DD0</string>
+		</dict>
+		<key>B4BAE577F7C5FD371371AB1D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>84930ED7328608B7919E215A</string>
+		</dict>
+		<key>5A1A8A77D1E1F7314E3C9A45</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>19BAFDCDB4C92FAE0F60F318</string>
 		</dict>
 		<key>7F4741F5D07B074D0B414173</key>
 		<dict>
@@ -792,9 +937,12 @@
 				<string>EDF514F3CC24261432A5569F</string>
 				<string>80DC48A120689EB001F48B28</string>
 				<string>FB7199A283E7A151CFFFEFAC</string>
+				<string>4C17D5CDFC900AB3BCDE412B</string>
 				<string>9D4D007F1CCD8097A6423E97</string>
 				<string>B7DFBECB64C8002B6CE344BE</string>
+				<string>D017671ACA2CD874E6F167A7</string>
 				<string>1D374634814F22C287F61CCF</string>
+				<string>09F4F72A66159EE0D5F10284</string>
 				<string>884EA16F46192369BE17EE08</string>
 				<string>5880A609F33164C203A62033</string>
 				<string>EC530D9BE21F8E51DDB5955F</string>
@@ -802,10 +950,14 @@
 				<string>2DC6CED889C2C000245C6096</string>
 				<string>0FD377C41B7FE943180DFF78</string>
 				<string>44B3B82CD64EEA31B6E6A52F</string>
+				<string>82070004DAB4C3A1AF843F74</string>
+				<string>320F1C6D17211381E42AC9A9</string>
 				<string>1D640AE2FEFE08BFC49220BA</string>
 				<string>6EFEFBFA60410D33C1874C2B</string>
 				<string>7A3DB0B106FF3534B7D7CB21</string>
 				<string>008F788CBB46CF026677B3E8</string>
+				<string>B4BAE577F7C5FD371371AB1D</string>
+				<string>5A1A8A77D1E1F7314E3C9A45</string>
 				<string>7F4741F5D07B074D0B414173</string>
 				<string>8E501A205C6629851210EC8C</string>
 				<string>C43D5E71F362650C5692EA0D</string>
@@ -879,7 +1031,7 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
-			<string>8D1C0C012D50DEEAE4F57C23</string>
+			<string>EF7201C16721CEAF3B2ABAB8</string>
 		</dict>
 		<key>41D311A605520FC7B8B9A980</key>
 		<dict>
@@ -972,6 +1124,20 @@
 			<key>fileRef</key>
 			<string>B60FAC0CDFDC6B7FD6ADAC90</string>
 		</dict>
+		<key>F49B9E9300CDC6563234F0A0</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>88D86294FCD5D7D23E145670</string>
+		</dict>
+		<key>492073FB3D131AD2FC69224D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>ECA09BEED71AD8FC5EAF5BDF</string>
+		</dict>
 		<key>5D535257024E7B4E95766C21</key>
 		<dict>
 			<key>isa</key>
@@ -983,11 +1149,33 @@
 				<string>68735DCCA0E52D3C8159F4E5</string>
 				<string>FADF4CDD057F0B3D03CF301D</string>
 				<string>7604FA77B0B65FD0C99BFFD3</string>
+				<string>F49B9E9300CDC6563234F0A0</string>
+				<string>492073FB3D131AD2FC69224D</string>
 			</array>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
+		<key>CB9CDE7BC923104771281E8F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>EF7201C16721CEAF3B2ABAB8</string>
+		</dict>
 		<key>3D4C94A1F7EE40CC0F15C675</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>CB9CDE7BC923104771281E8F</string>
+			</array>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>D0729C85A0925AFAC840F68A</key>
 		<dict>
 			<key>isa</key>
 			<string>PBXShellScriptBuildPhase</string>
@@ -996,22 +1184,21 @@
 			<key>files</key>
 			<array/>
 			<key>name</key>
-			<string>Prepare Controls app icon</string>
+			<string>Prepare WidgetKit control size declarations</string>
 			<key>shellPath</key>
 			<string>/bin/bash</string>
 			<key>shellScript</key>
-			<string>bash "$SRCROOT/scripts/build-icon.sh" "$DERIVED_FILE_DIR/ControlsIcon"
-mkdir -p "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH"
-cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/AppIcon.icns"
+			<string>bash "$SRCROOT/scripts/build-widgetkit-overlay.sh" "$DERIVED_FILE_DIR/WidgetKitSPI"
 </string>
 			<key>inputPaths</key>
 			<array>
-				<string>$(SRCROOT)/Resources/AppIcon.png</string>
-				<string>$(SRCROOT)/scripts/build-icon.sh</string>
+				<string>$(SRCROOT)/scripts/build-widgetkit-overlay.sh</string>
+				<string>$(SRCROOT)/scripts/widgetkit-spi.swiftinterface</string>
+				<string>$(SDKROOT)/System/Library/Frameworks/WidgetKit.framework/Versions/A/Modules/WidgetKit.swiftmodule/arm64e-apple-macos.swiftinterface</string>
 			</array>
 			<key>outputPaths</key>
 			<array>
-				<string>$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/AppIcon.icns</string>
+				<string>$(DERIVED_FILE_DIR)/WidgetKitSPI/WidgetKit.swiftmodule/arm64e-apple-macos.swiftinterface</string>
 			</array>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
@@ -1087,6 +1274,8 @@ cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED
 				<string>NO</string>
 				<key>COMBINE_HIDPI_IMAGES</key>
 				<string>YES</string>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
 				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
 				<string>local.lockedgaze.app.controls</string>
 				<key>INFOPLIST_FILE</key>
@@ -1100,7 +1289,12 @@ cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED
 				<key>APPLICATION_EXTENSION_API_ONLY</key>
 				<string>YES</string>
 				<key>MACOSX_DEPLOYMENT_TARGET</key>
-				<string>26.0</string>
+				<string>14.0</string>
+				<key>SWIFT_INCLUDE_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>$(DERIVED_FILE_DIR)/WidgetKitSPI</string>
+				</array>
 				<key>SWIFT_OPTIMIZATION_LEVEL</key>
 				<string>-Onone</string>
 				<key>GCC_OPTIMIZATION_LEVEL</key>
@@ -1125,6 +1319,8 @@ cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED
 				<string>NO</string>
 				<key>COMBINE_HIDPI_IMAGES</key>
 				<string>YES</string>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
 				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
 				<string>local.lockedgaze.app.controls</string>
 				<key>INFOPLIST_FILE</key>
@@ -1138,7 +1334,12 @@ cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED
 				<key>APPLICATION_EXTENSION_API_ONLY</key>
 				<string>YES</string>
 				<key>MACOSX_DEPLOYMENT_TARGET</key>
-				<string>26.0</string>
+				<string>14.0</string>
+				<key>SWIFT_INCLUDE_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>$(DERIVED_FILE_DIR)/WidgetKitSPI</string>
+				</array>
 				<key>SWIFT_OPTIMIZATION_LEVEL</key>
 				<string>-O</string>
 				<key>GCC_OPTIMIZATION_LEVEL</key>
@@ -1177,6 +1378,7 @@ cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED
 			<string>BD98151502478E2827517B50</string>
 			<key>buildPhases</key>
 			<array>
+				<string>D0729C85A0925AFAC840F68A</string>
 				<string>5D535257024E7B4E95766C21</string>
 				<string>3D4C94A1F7EE40CC0F15C675</string>
 			</array>
@@ -1418,6 +1620,8 @@ cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED
 				<string>NO</string>
 				<key>COMBINE_HIDPI_IMAGES</key>
 				<string>YES</string>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
 				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
 				<string>local.lockedgaze.app</string>
 				<key>INFOPLIST_FILE</key>
@@ -1481,6 +1685,8 @@ cp "$DERIVED_FILE_DIR/ControlsIcon/AppIcon.icns" "$TARGET_BUILD_DIR/$UNLOCALIZED
 				<string>NO</string>
 				<key>COMBINE_HIDPI_IMAGES</key>
 				<string>YES</string>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
 				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
 				<string>local.lockedgaze.app</string>
 				<key>INFOPLIST_FILE</key>

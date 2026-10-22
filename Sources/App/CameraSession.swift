@@ -9,12 +9,19 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
     private let sessionQueue = DispatchQueue(label: "local.lockedgaze.capture")
     private let deliveryQueue = DispatchQueue(label: "local.lockedgaze.delivery", qos: .userInitiated)
     private let processingQueue = DispatchQueue(label: "local.lockedgaze.processing", qos: .userInitiated, autoreleaseFrequency: .workItem)
+    private let modelQueue = DispatchQueue(label: "local.lockedgaze.models", qos: .userInitiated)
     private let capture = AVCaptureSession()
     private let videoOutput = AVCaptureVideoDataOutput()
     private let context = CIContext(options: [.cacheIntermediates: false])
     private var pipeline: LGFramePipeline?
     private var modelStore: ModelStore?
     private let publisher = CameraPublisherClient()
+    private let preview: PreviewFeed
+    private var publishing = true
+    private var correcting = true
+    private var pipelineWarm = false
+    private var modelFailure: Error?
+    @MainActor private var wantsCorrection = true
     private var inputPool: CVPixelBufferPool?
     private var outputPool: CVPixelBufferPool?
     private var failureReported = false
@@ -25,12 +32,20 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
     @MainActor private var generation = 0
     @MainActor var onFailure: ((Error) -> Void)?
 
-    override init() {
+    init(preview: PreviewFeed) {
+        self.preview = preview
         super.init()
         worker = LatestFrameWorker(queue: processingQueue) { [weak self] frame in self?.process(frame) }
     }
 
-    @MainActor func start(models: URL, sourceID: String? = nil) async throws {
+    /// Pass-through and Locked Gaze switch here, frame by frame, without restarting capture.
+    @MainActor func setCorrection(_ on: Bool) {
+        wantsCorrection = on
+        processingQueue.async { self.correcting = on }
+    }
+
+    /// Without `publishing`, frames feed only the preview; the virtual camera stays untouched.
+    @MainActor func start(models: URL, sourceID: String? = nil, publishing: Bool = true) async throws {
         generation += 1
         let token = generation
         let allowed: Bool
@@ -42,22 +57,33 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
         guard generation == token else { throw CancellationError() }
         guard allowed else { throw GazeError.message("Allow Locked Gaze to access the camera in System Settings > Privacy & Security > Camera.") }
         do {
+            // Locked Gaze waits for the models, so a call never sees an uncorrected frame.
+            // Pass-through starts at once and loads them in the background for an instant switch.
+            let modelsFirst = wantsCorrection || !publishing
             try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
                 processingQueue.async {
                     do {
-                        self.modelStore = try ModelStore(directory: models)
-                        self.pipeline = LGFramePipeline(models: self.modelStore!)
+                        if modelsFirst {
+                            let store = try ModelStore(directory: models)
+                            self.modelStore = store; self.pipeline = LGFramePipeline(models: store)
+                        }
                         self.inputPool = try Self.makePool(); self.outputPool = try Self.makePool()
                         self.failureReported = false
+                        self.modelFailure = nil
+                        self.pipelineWarm = false
+                        self.publishing = publishing
                         self.processingGeneration = token
                         continuation.resume()
                     } catch { continuation.resume(throwing: error) }
                 }
             }
             guard generation == token else { throw CancellationError() }
-            try await StartupRetry.run {
-                guard self.generation == token else { throw CancellationError() }
-                try await self.publisher.start()
+            if !modelsFirst { loadModelsInBackground(models, token: token) }
+            if publishing {
+                try await StartupRetry.run {
+                    guard self.generation == token else { throw CancellationError() }
+                    try await self.publisher.start()
+                }
             }
             try Task.checkCancellation()
             guard generation == token else { throw CancellationError() }
@@ -93,7 +119,7 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
             guard running else { throw GazeError.message("The camera could not start.") }
             for name in [AVCaptureSession.runtimeErrorNotification, AVCaptureSession.wasInterruptedNotification] {
                 observers.append(NotificationCenter.default.addObserver(forName: name, object: capture, queue: nil) { [weak self] _ in
-                    self?.reportFailure(GazeError.message("The camera stream was interrupted. Reconnect your camera and activate Locked Gaze again."), token: token)
+                    self?.reportFailure(GazeError.message("The camera stream was interrupted. Reconnect your camera and choose the mode again."), token: token)
                 })
             }
             observers.append(NotificationCenter.default.addObserver(forName: AVCaptureDevice.wasDisconnectedNotification, object: nil, queue: nil) { [weak self] notification in
@@ -123,6 +149,7 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
                 self.processingQueue.async {
                     self.publisher.stop(); self.pipeline?.reset(); self.pipeline = nil; self.modelStore = nil
                     self.inputPool = nil; self.outputPool = nil
+                    self.processingGeneration = 0; self.modelFailure = nil
                     continuation.resume()
                 }
             }
@@ -161,13 +188,28 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
         guard let buffer = CMSampleBufferGetImageBuffer(sample) else { return }
         worker.submit(Frame(buffer: buffer, receivedAt: ProcessInfo.processInfo.systemUptime))
     }
+    private func loadModelsInBackground(_ models: URL, token: Int) {
+        modelQueue.async {
+            let loaded = Result { () throws -> (ModelStore, LGFramePipeline) in
+                let store = try ModelStore(directory: models)
+                return (store, LGFramePipeline(models: store))
+            }
+            self.processingQueue.async {
+                guard self.processingGeneration == token, self.pipeline == nil else { return }
+                switch loaded {
+                case .success(let (store, pipeline)): self.modelStore = store; self.pipeline = pipeline
+                case .failure(let error): self.modelFailure = error
+                }
+            }
+        }
+    }
     private func process(_ frame: Frame) {
-        guard !failureReported, let pipeline, let inputPool, let outputPool,
-              ProcessInfo.processInfo.systemUptime - frame.receivedAt < CameraContract.staleAfter,
-              let corrected = allocate(outputPool) else { return }
+        guard !failureReported, let inputPool, let outputPool,
+              ProcessInfo.processInfo.systemUptime - frame.receivedAt < CameraContract.staleAfter else { return }
         let cameraBuffer = frame.buffer
         autoreleasepool {
             do {
+                if correcting, pipeline == nil, let modelFailure { throw modelFailure }
                 let input: CVPixelBuffer
                 if CVPixelBufferGetWidth(cameraBuffer) == CameraContract.width && CVPixelBufferGetHeight(cameraBuffer) == CameraContract.height { input = cameraBuffer }
                 else {
@@ -180,10 +222,22 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
                     context.render(centered.composited(over: background), to: normalized)
                     input = normalized
                 }
-                try pipeline.processPixelBuffer(input, into: corrected)
-                if ProcessInfo.processInfo.systemUptime - frame.receivedAt < CameraContract.staleAfter {
-                    try publisher.send(corrected)
+                // Inference runs for Locked Gaze, and in Pass-through only while the preview shows it.
+                var corrected: CVPixelBuffer?
+                if let pipeline, correcting || preview.isEnabled, let output = allocate(outputPool) {
+                    if !pipelineWarm { pipeline.reset(); pipelineWarm = true }
+                    try pipeline.processPixelBuffer(input, into: output)
+                    corrected = output
+                } else { pipelineWarm = false }
+                if publishing && ProcessInfo.processInfo.systemUptime - frame.receivedAt < CameraContract.staleAfter {
+                    if correcting && pipeline != nil {
+                        if let corrected { try publisher.send(corrected) }
+                    } else if let original = allocate(outputPool), PixelCopy.bgra(from: input, to: original) {
+                        // Pass-through, or Locked Gaze while its models are still loading.
+                        try publisher.send(original)
+                    }
                 }
+                if let corrected { preview.submit(original: input, corrected: corrected) }
             } catch {
                 failureReported = true
                 worker.stop()

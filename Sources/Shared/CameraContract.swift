@@ -13,4 +13,8 @@ enum CameraContract {
     static let height = 720
     static let frameDuration = CMTime(value: 1, timescale: 30)
     static let staleAfter: TimeInterval = 0.25
+    /// How long one publisher process looks for a device that has not appeared yet.
+    /// Keep it below launchd's 10 s relaunch throttle and the host's 10 s deadline, so a
+    /// process that never sees the device is still replaced in time.
+    static let publisherDiscoveryWindow: TimeInterval = 5
 }
