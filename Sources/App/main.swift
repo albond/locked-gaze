@@ -23,6 +23,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var previewSync: Task<Void, Never>?
     private let installer = ExtensionInstaller()
     private let permissions = PermissionPrompt()
+    private let shield = TerminationShield()
     private lazy var lifecycle = CameraLifecycle(prepare: { [unowned self] in
         try PlatformRequirements.requireSupported()
         try await permissions.ensureCamera()
@@ -141,6 +142,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         lifecycle.onChange = { [weak self] in
             guard let self else { return }
             refresh()
+            // The virtual camera serves other apps until the lifecycle is idle again.
+            shield.set(held: state != .idle)
             if state == .starting || state == .stopping { preview.reset() }
             syncPreview()
         }
