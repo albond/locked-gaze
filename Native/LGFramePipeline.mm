@@ -1,4 +1,5 @@
 #import "LGFramePipeline.h"
+#include "LGGazeNaturalness.hpp"
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/calib3d.hpp>
@@ -99,12 +100,13 @@ struct BoxState {
 struct FeatureState {
     double meanAspect=.3,pitchAlpha=0,yawAlpha=0;
     int frames=0;bool blink=false;
+    lg::GazeNaturalness natural;
     static double transition(double angle,double start,double end){
         double t=std::clamp((std::abs(angle)-start*CV_PI/180)/((end-start)*CV_PI/180),0.,1.);
         return t*t*t*(10+t*(-15+6*t));
     }
     static double advance(double old,double desired){return old+std::clamp(desired-old,-.1,.1);}
-    Vec2f target(const vector<float> &labels,const Points &points,Vec2f head){
+    Vec2f target(const vector<float> &labels,const Points &points,Vec2f head,double dt){
         double aspect=1e10;
         for(int base:{36,42}){
             double width=norm(points[base]-points[base+3]);
@@ -117,7 +119,11 @@ struct FeatureState {
         double pitch=labels[10],yaw=labels[11];
         yawAlpha=advance(yawAlpha,1-(1-transition(yaw,20,30))*(1-transition(head[1],25,30)));
         pitchAlpha=blink?1:advance(pitchAlpha,1-(1-transition(pitch,20,30))*(1-transition(head[0],15,25)));
-        return {float(pitchAlpha*pitch),float(yawAlpha*yaw)};
+        // An alpha of 1 passes the observed gaze through, so 1 - alpha is how far the
+        // axis is corrected. The optional softening never acts on a released axis.
+        double targetPitch=pitchAlpha*pitch,targetYaw=yawAlpha*yaw;
+        natural.apply(dt,blink,pitch,yaw,1-pitchAlpha,1-yawAlpha,targetPitch,targetYaw);
+        return {float(targetPitch),float(targetYaw)};
     }
 };
 struct Geometry { Matx33f homography; Vec2f head; float depth; };
@@ -204,7 +210,8 @@ void restore(Mat &frame,const Mat &patch,const vector<float>&decoded,const vecto
     Mat warped;warpPerspective(residual,warped,Mat(local),cv::Size(x1-x0,y1-y0),INTER_LINEAR,BORDER_CONSTANT,Scalar(0));
     for(int y=y0;y<y1;y++)for(int x=x0;x<x1;x++)for(int c=0;c<3;c++)frame.at<Vec3b>(y,x)[c]=uchar(std::floor(std::clamp(frame.at<Vec3b>(y,x)[c]+warped.at<Vec3f>(y-y0,x-x0)[c],0.f,255.f)+.5f));
 }
-struct State {bool tracking=false,visible=true;int visibilityCount=0;cv::Size size;Points previous;OneEuro filter;BoxState boxes;FeatureState features;};
+struct State {bool tracking=false,visible=true;int visibilityCount=0;cv::Size size;Points previous;OneEuro filter;BoxState boxes;FeatureState features;
+    bool timed=false;std::chrono::steady_clock::time_point lastTarget;};
 }
 
 @implementation LGTensorBuffer
@@ -217,15 +224,19 @@ struct State {bool tracking=false,visible=true;int visibilityCount=0;cv::Size si
     NSString *_lastStatus,*_lastReason;
     NSMutableDictionary<NSString *, NSNumber *> *_stageTimings;
     std::chrono::steady_clock::time_point _stageStart;
+    double _correctionStrength;
 }
 @synthesize profilingEnabled = _profilingEnabled;
+@synthesize naturalLookAways = _naturalLookAways;
+- (double)correctionStrength {return _correctionStrength;}
+- (void)setCorrectionStrength:(double)strength {_correctionStrength=std::isfinite(strength)?std::clamp(strength,0.,1.):1;}
 - (NSDictionary<NSString *, NSNumber *> *)lastStageTimings {return _stageTimings ?: @{};}
 - (void)markStage:(NSString *)name {
     if(!_profilingEnabled)return;
     auto now=std::chrono::steady_clock::now();
     _stageTimings[name]=@(std::chrono::duration<double,std::milli>(now-_stageStart).count());_stageStart=now;
 }
-- (instancetype)initWithModels:(id<LGModelProvider>)models {if((self=[super init])){_models=models;[self reset];}return self;}
+- (instancetype)initWithModels:(id<LGModelProvider>)models {if((self=[super init])){_models=models;_correctionStrength=1;[self reset];}return self;}
 - (void)reset {_state=std::make_unique<State>();_lastStatus=@"idle";_lastReason=@"";_stageTimings=nil;}
 - (NSString *)lastStatus{return _lastStatus;}
 - (NSString *)lastReason{return _lastReason;}
@@ -294,7 +305,10 @@ struct State {bool tracking=false,visible=true;int visibilityCount=0;cv::Size si
     [self markStage:@"eye_warp"];
     [self infer:@"encoder" inputs:{{"input_image",&rgb}} outputs:{{"embeddings_flat",&embeddings},{"pseudo_labels_flat",&labels}}];
     [self markStage:@"encoder"];
-    Vec2f goal=s.features.target(labels,points,g.head);target[0]=goal[0];target[1]=goal[1];
+    auto tick=std::chrono::steady_clock::now();
+    double dt=s.timed?std::chrono::duration<double>(tick-s.lastTarget).count():1./30;s.timed=true;s.lastTarget=tick;
+    s.features.natural.settings.strength=_correctionStrength;s.features.natural.settings.lookAways=_naturalLookAways;
+    Vec2f goal=s.features.target(labels,points,g.head,dt);target[0]=goal[0];target[1]=goal[1];
     if(std::max(std::abs(goal[0]),std::abs(goal[1]))>CV_PI)throw std::runtime_error("invalid_gaze_target");
     [self markStage:@"gaze_controls"];
     [self infer:@"decoder" inputs:{{"embeddings_flat",&embeddings},{"pseudo_labels_flat",&labels},{"gaze_por",&target}} outputs:{{"gaze_redirected_image",&decoded},{"gaze_landmarks",&lids}}];

@@ -27,6 +27,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly) NSString *lastStatus;
 @property(nonatomic, readonly) NSString *lastReason;
 @property(nonatomic) BOOL profilingEnabled;
+/// How far the gaze is moved toward the camera: 1 (default) aims fully at the lens;
+/// lower values leave that share of the observed eye movement. Clamped to 0...1.
+@property(nonatomic) double correctionStrength;
+/// Adds brief glances a few degrees off the lens at random intervals. Off by default.
+@property(nonatomic) BOOL naturalLookAways;
 @property(nonatomic, readonly) NSDictionary<NSString *, NSNumber *> *lastStageTimings;
 @end
 

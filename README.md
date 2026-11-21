@@ -46,6 +46,7 @@ Your camera frames stay on your Mac. Eye-contact correction runs entirely on you
 
 - **Eye contact, with less effort.** Gaze correction designed for conversations, presentations, and interviews.
 - **A home in your menu bar.** Switch between Off, Pass-through, and Locked Gaze whenever you like.
+- **Natural Gaze, if you prefer it.** An optional softer correction that keeps some of your own eye movement and glances away briefly now and then, like people do.
 - **Pass-through when you need it.** Keep the Locked Gaze camera in a call and send your original video, with no camera switch.
 - **One click from Control Center or the desktop.** On macOS 26 or later, add the Locked Gaze, Pass-through, and Locked Gaze Off controls side by side, add Mode and Camera for a panel with a three-way switch and your cameras, or put the Locked Gaze widget on your desktop.
 - **See it before your call.** Preview shows your camera and the corrected view side by side, without starting a meeting. Nothing is recorded.

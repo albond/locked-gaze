@@ -378,6 +378,17 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.swift</string>
 		</dict>
+		<key>51DFFBA5DD1B914D96617CE2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/Core/NaturalGaze.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
 		<key>B6516958672FB05CB8EB6DD0</key>
 		<dict>
 			<key>isa</key>
@@ -510,6 +521,17 @@
 			<key>lastKnownFileType</key>
 			<string>folder.iconcomposer.icon</string>
 		</dict>
+		<key>DA278BFDD6FBDBFC0CC87B7F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Native/include/LGGazeNaturalness.hpp</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.cpp.h</string>
+		</dict>
 		<key>11B70C8AE80489B974636C11</key>
 		<dict>
 			<key>isa</key>
@@ -623,6 +645,7 @@
 				<string>AE696CA84B06F317EAB1311D</string>
 				<string>CFDD214C47E5EEC12C5BA545</string>
 				<string>B76A32123B3915E8ADE47294</string>
+				<string>51DFFBA5DD1B914D96617CE2</string>
 				<string>B6516958672FB05CB8EB6DD0</string>
 				<string>84930ED7328608B7919E215A</string>
 				<string>19BAFDCDB4C92FAE0F60F318</string>
@@ -635,6 +658,7 @@
 				<string>C112E5505A3E712CCC5A5201</string>
 				<string>1E97B59266506C232C9DC5B9</string>
 				<string>EF7201C16721CEAF3B2ABAB8</string>
+				<string>DA278BFDD6FBDBFC0CC87B7F</string>
 				<string>11B70C8AE80489B974636C11</string>
 				<string>6B7C5F8432B968C375C9E6E7</string>
 				<string>EA2A48B74AC827CA6A3DF1B8</string>
@@ -869,6 +893,13 @@
 			<key>fileRef</key>
 			<string>B76A32123B3915E8ADE47294</string>
 		</dict>
+		<key>0DCEF7B945024D9417344F4D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>51DFFBA5DD1B914D96617CE2</string>
+		</dict>
 		<key>008F788CBB46CF026677B3E8</key>
 		<dict>
 			<key>isa</key>
@@ -955,6 +986,7 @@
 				<string>1D640AE2FEFE08BFC49220BA</string>
 				<string>6EFEFBFA60410D33C1874C2B</string>
 				<string>7A3DB0B106FF3534B7D7CB21</string>
+				<string>0DCEF7B945024D9417344F4D</string>
 				<string>008F788CBB46CF026677B3E8</string>
 				<string>B4BAE577F7C5FD371371AB1D</string>
 				<string>5A1A8A77D1E1F7314E3C9A45</string>
