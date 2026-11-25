@@ -24,6 +24,7 @@ for path in sorted([*root.glob('Sources/**/*.swift'),*root.glob('Native/*.mm')])
 models=file('build/Models','folder');children.append(models)
 # Icon Composer document: actool compiles it into Assets.car (Liquid Glass on macOS 26+) and AppIcon.icns.
 icon=file('Resources/AppIcon.icon','folder.iconcomposer.icon');children.append(icon)
+children.append(file('Native/include/LGGazeNaturalness.hpp','sourcecode.cpp.h'))
 for p in ['Native/include/LGFramePipeline.h','Config/App.entitlements','Config/Camera.entitlements','Config/App-Info.plist','Config/Camera-Info.plist','Config/Publisher-Info.plist','Config/Publisher.entitlements']:
     children.append(file(p,'sourcecode.c.h' if p.endswith('.h') else 'text.plist.xml'))
 group=add('root-group','PBXGroup',sourceTree='<group>',children=children+[products])

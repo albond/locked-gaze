@@ -7,6 +7,7 @@ import OSLog
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusItem: NSStatusItem!
     private var modeItems: [NSMenuItem] = []
+    private var naturalGazeItem: NSMenuItem!
     private var loggedStatus: String?
     private let cameraMenu = NSMenu(title: "Source Camera")
     private let about = AboutWindow()
@@ -123,6 +124,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         source.image = NSImage(systemSymbolName: "video", accessibilityDescription: nil)
         cameraMenu.delegate = self
         source.submenu = cameraMenu
+        let naturalItem = menu.addItem(withTitle: "Natural Gaze", action: #selector(toggleNaturalGaze), keyEquivalent: "")
+        naturalItem.image = NSImage(systemSymbolName: "eye", accessibilityDescription: nil)
+        naturalItem.toolTip = "Softer correction with brief glances away from the camera."
+        naturalItem.state = NaturalGaze.isEnabled ? .on : .off
+        naturalGazeItem = naturalItem
         let previewItem = menu.addItem(withTitle: "Preview…", action: #selector(showPreview), keyEquivalent: "")
         previewItem.image = NSImage(systemSymbolName: "rectangle.split.2x1", accessibilityDescription: nil)
         menu.addItem(.separator())
@@ -130,7 +136,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(.separator())
         let rateItem = menu.addItem(withTitle: "🙏 Please Rate our App", action: #selector(rateApp), keyEquivalent: "")
         let quit = menu.addItem(withTitle: "Quit Locked Gaze", action: #selector(quit), keyEquivalent: "q")
-        for item in modeItems + [previewItem, aboutItem, rateItem, quit] { item.target = self }
+        for item in modeItems + [naturalItem, previewItem, aboutItem, rateItem, quit] { item.target = self }
         statusItem.menu = menu
         rebuildCameras()
         GazeControlState.setMode = { [weak self] mode in
@@ -275,6 +281,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             previewRun = nil
             await previewCamera.stop()
         }
+    }
+    @objc private func toggleNaturalGaze() {
+        let on = !NaturalGaze.isEnabled
+        NaturalGaze.isEnabled = on
+        naturalGazeItem.state = on ? .on : .off
+        camera.setNaturalGaze(on)
+        previewCamera.setNaturalGaze(on)
     }
     @objc private func showPreview() { preview.show() }
     @objc private func showAbout() { about.show() }

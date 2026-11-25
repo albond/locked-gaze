@@ -19,6 +19,7 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
     private let preview: PreviewFeed
     private var publishing = true
     private var correcting = true
+    private var naturalGaze = NaturalGaze.isEnabled
     private var pipelineWarm = false
     private var modelFailure: Error?
     @MainActor private var wantsCorrection = true
@@ -42,6 +43,11 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
     @MainActor func setCorrection(_ on: Bool) {
         wantsCorrection = on
         processingQueue.async { self.correcting = on }
+    }
+
+    /// Softer correction with brief glances away; applies from the next frame.
+    @MainActor func setNaturalGaze(_ on: Bool) {
+        processingQueue.async { self.naturalGaze = on }
     }
 
     /// Without `publishing`, frames feed only the preview; the virtual camera stays untouched.
@@ -226,6 +232,8 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
                 var corrected: CVPixelBuffer?
                 if let pipeline, correcting || preview.isEnabled, let output = allocate(outputPool) {
                     if !pipelineWarm { pipeline.reset(); pipelineWarm = true }
+                    pipeline.correctionStrength = NaturalGaze.strength(enabled: naturalGaze)
+                    pipeline.naturalLookAways = naturalGaze
                     try pipeline.processPixelBuffer(input, into: output)
                     corrected = output
                 } else { pipelineWarm = false }

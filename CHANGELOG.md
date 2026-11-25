@@ -1,5 +1,9 @@
 # What's New
 
+## Unreleased
+
+- Natural Gaze (menu bar, off by default): corrects most of the way to the camera so some of your own eye movement remains, and adds brief glances away every few seconds instead of a fixed stare.
+
 ## 1.1.0
 
 - Three modes: Off, Pass-through and Locked Gaze. Pass-through sends your original video without leaving the Locked Gaze camera, so you can turn correction off mid-call.

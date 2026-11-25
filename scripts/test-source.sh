@@ -18,6 +18,9 @@ import subprocess, sys
 subprocess.run(["build/stability/" + sys.argv[1], *sys.argv[2:]], check=True, timeout=180)
 PYTEST
 }
+xcrun clang++ -std=c++17 -O1 -Wall -Wextra -arch arm64 -mmacosx-version-min=14.0 -I Native/include \
+    Tests/GazeNaturalnessTests/main.cpp -o build/stability/GazeNaturalnessTests
+run GazeNaturalnessTests
 xcrun swiftc "${swift[@]}" Sources/Core/LatestFrameWorker.swift Tests/FrameWorkerTests/main.swift -o build/stability/FrameWorkerTests
 run FrameWorkerTests
 xcrun swiftc "${swift[@]}" Sources/Core/ReplyOnce.swift Tests/ReplyOnceTests/main.swift -o build/stability/ReplyOnceTests
@@ -48,4 +51,4 @@ xcrun swiftc "${swift[@]}" Sources/Core/GazeError.swift Sources/Core/GazeMode.sw
 run ModePanelTests
 xcrun swiftc "${swift[@]}" -import-objc-header Native/include/LGFramePipeline.h Tests/NativeTests/main.swift "${native[@]}" -o build/stability/NativeTests
 run NativeTests
-echo 'All fifteen source-only stability suites passed.'
+echo 'All sixteen source-only stability suites passed.'
