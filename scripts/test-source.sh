@@ -46,6 +46,8 @@ xcrun swiftc "${swift[@]}" Sources/Core/GazeError.swift Sources/Core/CameraSelec
 run SourceCameraMenuTests
 xcrun swiftc "${swift[@]}" Sources/Core/GazeError.swift Sources/Core/GazeMode.swift Sources/Core/CameraSelection.swift Sources/Shared/CameraContract.swift Sources/App/ModePanel.swift Tests/ModePanelTests/main.swift -o build/stability/ModePanelTests
 run ModePanelTests
+xcrun swiftc "${swift[@]}" Sources/App/TerminationShield.swift Tests/TerminationShieldTests/main.swift -o build/stability/TerminationShieldTests
+run TerminationShieldTests
 xcrun swiftc "${swift[@]}" -import-objc-header Native/include/LGFramePipeline.h Tests/NativeTests/main.swift "${native[@]}" -o build/stability/NativeTests
 run NativeTests
-echo 'All fifteen source-only stability suites passed.'
+echo 'All sixteen source-only stability suites passed.'

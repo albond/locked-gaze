@@ -180,6 +180,17 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.swift</string>
 		</dict>
+		<key>0B8CE96ACFC3D0E926080A8F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/App/TerminationShield.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
 		<key>3FD2EF1C423471ECC041F1FF</key>
 		<dict>
 			<key>isa</key>
@@ -605,6 +616,7 @@
 				<string>A2DC7F627C51D09FD53F9A13</string>
 				<string>A0F20A5905DB785DE1FFC52C</string>
 				<string>E26D999A86947B67F4844FA6</string>
+				<string>0B8CE96ACFC3D0E926080A8F</string>
 				<string>3FD2EF1C423471ECC041F1FF</string>
 				<string>AF086B9EDF5D21B7535C7202</string>
 				<string>8E00FA504E47B2EE67AC6581</string>
@@ -778,6 +790,13 @@
 			<key>fileRef</key>
 			<string>E26D999A86947B67F4844FA6</string>
 		</dict>
+		<key>0B6C676071BA6F646742C3F7</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>0B8CE96ACFC3D0E926080A8F</string>
+		</dict>
 		<key>09F4F72A66159EE0D5F10284</key>
 		<dict>
 			<key>isa</key>
@@ -942,6 +961,7 @@
 				<string>B7DFBECB64C8002B6CE344BE</string>
 				<string>D017671ACA2CD874E6F167A7</string>
 				<string>1D374634814F22C287F61CCF</string>
+				<string>0B6C676071BA6F646742C3F7</string>
 				<string>09F4F72A66159EE0D5F10284</string>
 				<string>884EA16F46192369BE17EE08</string>
 				<string>5880A609F33164C203A62033</string>
