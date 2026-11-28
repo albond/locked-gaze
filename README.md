@@ -32,15 +32,13 @@
 
 Reading notes, following a presentation, or watching the person on screen can pull your gaze away from the camera. Locked Gaze helps bring it back, so you can focus on what you want to say.
 
-*Real screenshots of Locked Gaze 1.1.0. The camera shows a sample video.*
+*Real screenshots of Locked Gaze. The camera shows a sample video.*
 
 ![Preview window: in the original camera view on the left she looks down; in the Locked Gaze view on the right she looks at the camera.](Resources/Screenshots/01-preview.jpg)
 
 ## Your conversation, your Mac
 
 Your camera frames stay on your Mac. Eye-contact correction runs entirely on your device, without uploading video for processing. Locked Gaze does not record your camera feed.
-
-![About Locked Gaze: on-device, private and offline. Your camera frames stay on your Mac, with no video uploads and no camera recordings.](Resources/Screenshots/05-privacy.jpg)
 
 ## A small app with a clear purpose
 
@@ -80,7 +78,7 @@ Locked Gaze is available **free on the Mac App Store**. Download the ready-to-us
 
 [Download Locked Gaze on the Mac App Store](https://apps.apple.com/app/id6814174298)
 
-[What's new in 1.1.0](CHANGELOG.md#110): three modes with Pass-through, Control Center controls and a Mode and Camera panel, a desktop widget, Preview, support for Apple M2 and newer chips including MacBook Air, and a new look. The source version badge refers to this repository; the App Store page shows the version currently available to download.
+[What's new in 1.2.0](CHANGELOG.md#120): Browser mode for web meetings in Safari and Chrome on Macs that block the Locked Gaze camera. The source version badge refers to this repository; the App Store page shows the version currently available to download.
 
 [Follow Locked Gaze on GitHub](https://github.com/albond/locked-gaze) and give it a star to bookmark the project. The source edition includes the native application and model interface specifications. Model weights are not included; building a working gaze-correction app requires compatible models supplied separately.
 
