@@ -65,6 +65,28 @@
 			<key>explicitFileType</key>
 			<string>wrapper.xpc-service</string>
 		</dict>
+		<key>763ED4B56434A90A85E9C144</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>LockedGazeBrowserHost</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+			<key>explicitFileType</key>
+			<string>compiled.mach-o.executable</string>
+		</dict>
+		<key>F65DB391C8B5667033454EBB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>LockedGazeSafari.appex</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+			<key>explicitFileType</key>
+			<string>wrapper.app-extension</string>
+		</dict>
 		<key>0A3E27B8CA818264D75C8D81</key>
 		<dict>
 			<key>isa</key>
@@ -79,6 +101,8 @@
 				<string>9B5EA5B470B5FDC806AA1095</string>
 				<string>10C50543D5AD7F4C64ED50E2</string>
 				<string>E2766D768D2958DD7634E2E4</string>
+				<string>763ED4B56434A90A85E9C144</string>
+				<string>F65DB391C8B5667033454EBB</string>
 			</array>
 		</dict>
 		<key>63EE053353E45F6A22419022</key>
@@ -91,6 +115,17 @@
 			<string>&lt;group&gt;</string>
 			<key>lastKnownFileType</key>
 			<string>sourcecode.cpp.objcpp</string>
+		</dict>
+		<key>B94EBFBD947ED99386F5BEF8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/App/BrowserFeed.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
 		</dict>
 		<key>116EC12D2EA3220EC03C8998</key>
 		<dict>
@@ -109,6 +144,17 @@
 			<string>PBXFileReference</string>
 			<key>path</key>
 			<string>Sources/App/CameraSession.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
+		<key>42C57ED6CD7E2124236262EB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/App/ChromeConnector.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 			<key>lastKnownFileType</key>
@@ -197,6 +243,39 @@
 			<string>PBXFileReference</string>
 			<key>path</key>
 			<string>Sources/App/main.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
+		<key>B845ED89CD9AC39BF93F5089</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/BrowserHost/main.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
+		<key>DAFA1937FD6E9F63BC50A99F</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/BrowserIPC/BrowserContract.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
+		<key>3FBFBC3207B8EF174DD47CF8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/BrowserIPC/FrameSubscriber.swift</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 			<key>lastKnownFileType</key>
@@ -466,6 +545,17 @@
 			<key>lastKnownFileType</key>
 			<string>sourcecode.swift</string>
 		</dict>
+		<key>7B17546FADF77F1E9132FF2D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Sources/SafariExtension/SafariWebExtensionHandler.swift</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.swift</string>
+		</dict>
 		<key>23DF8ED8F6D6707CABAACB3B</key>
 		<dict>
 			<key>isa</key>
@@ -587,6 +677,50 @@
 			<key>lastKnownFileType</key>
 			<string>text.plist.xml</string>
 		</dict>
+		<key>D14236EC3A8FC5D2F0461D8C</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Config/BrowserHost-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+		</dict>
+		<key>D732C755D94F9398C347EC22</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Config/BrowserHost.entitlements</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+		</dict>
+		<key>95F625EC1F14D4872F070E42</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Config/Safari-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+		</dict>
+		<key>D2A9ACF25F9315781B55C84D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Config/Safari.entitlements</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+		</dict>
 		<key>C69913C7EE4DFDD011BE172F</key>
 		<dict>
 			<key>isa</key>
@@ -597,8 +731,10 @@
 			<array>
 				<string>EE1E752050BF380B88186C3D</string>
 				<string>63EE053353E45F6A22419022</string>
+				<string>B94EBFBD947ED99386F5BEF8</string>
 				<string>116EC12D2EA3220EC03C8998</string>
 				<string>3075A9D7F6CC5000BD750822</string>
+				<string>42C57ED6CD7E2124236262EB</string>
 				<string>CCB001D5E9CF861EC8CE202C</string>
 				<string>01AA07C18EAF8735CC10890B</string>
 				<string>DED429E8F9208C8118435C41</string>
@@ -607,6 +743,9 @@
 				<string>E26D999A86947B67F4844FA6</string>
 				<string>3FD2EF1C423471ECC041F1FF</string>
 				<string>AF086B9EDF5D21B7535C7202</string>
+				<string>B845ED89CD9AC39BF93F5089</string>
+				<string>DAFA1937FD6E9F63BC50A99F</string>
+				<string>3FBFBC3207B8EF174DD47CF8</string>
 				<string>8E00FA504E47B2EE67AC6581</string>
 				<string>3901E9379DB363554E85E331</string>
 				<string>32D324E8BEEE0D338B832676</string>
@@ -631,6 +770,7 @@
 				<string>BB73BA3382CDDC546EA63603</string>
 				<string>FCEA454A805C73EF24C104F5</string>
 				<string>1051C7AF10809DCD75E7134A</string>
+				<string>7B17546FADF77F1E9132FF2D</string>
 				<string>23DF8ED8F6D6707CABAACB3B</string>
 				<string>C112E5505A3E712CCC5A5201</string>
 				<string>1E97B59266506C232C9DC5B9</string>
@@ -642,6 +782,18 @@
 				<string>48AE23C9ED0D1ADCD95437C2</string>
 				<string>2ABAD2695D2BB213CA4959AD</string>
 				<string>AF2D290E43E6E975D7526872</string>
+				<string>D14236EC3A8FC5D2F0461D8C</string>
+				<string>D732C755D94F9398C347EC22</string>
+				<string>95F625EC1F14D4872F070E42</string>
+				<string>D2A9ACF25F9315781B55C84D</string>
+				<string>401B58730902B0AC55642498</string>
+				<string>1F5C5614F78C5FEA9AB14142</string>
+				<string>C0E865929247514FA036CDBA</string>
+				<string>255D672C18203D05D48D48E3</string>
+				<string>CB581CA31E104D6DDB27EBAC</string>
+				<string>D10814690DD895AA855E4E44</string>
+				<string>78B9FA7EB79BA485A8B9D65E</string>
+				<string>52839826591294B3C56423BF</string>
 				<string>0A3E27B8CA818264D75C8D81</string>
 			</array>
 		</dict>
@@ -722,6 +874,13 @@
 			<key>fileRef</key>
 			<string>63EE053353E45F6A22419022</string>
 		</dict>
+		<key>B0088B2CAD8108C1198B4423</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>B94EBFBD947ED99386F5BEF8</string>
+		</dict>
 		<key>EDF514F3CC24261432A5569F</key>
 		<dict>
 			<key>isa</key>
@@ -735,6 +894,13 @@
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
 			<string>3075A9D7F6CC5000BD750822</string>
+		</dict>
+		<key>7188139A8F239964021B8A05</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>42C57ED6CD7E2124236262EB</string>
 		</dict>
 		<key>FB7199A283E7A151CFFFEFAC</key>
 		<dict>
@@ -791,6 +957,20 @@
 			<string>PBXBuildFile</string>
 			<key>fileRef</key>
 			<string>AF086B9EDF5D21B7535C7202</string>
+		</dict>
+		<key>84D7599723D81DF62FBBD877</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>DAFA1937FD6E9F63BC50A99F</string>
+		</dict>
+		<key>522386694E8F67E9CB44E135</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>3FBFBC3207B8EF174DD47CF8</string>
 		</dict>
 		<key>5880A609F33164C203A62033</key>
 		<dict>
@@ -934,8 +1114,10 @@
 			<key>files</key>
 			<array>
 				<string>EACB7CE7F30E4F8F828C34AF</string>
+				<string>B0088B2CAD8108C1198B4423</string>
 				<string>EDF514F3CC24261432A5569F</string>
 				<string>80DC48A120689EB001F48B28</string>
+				<string>7188139A8F239964021B8A05</string>
 				<string>FB7199A283E7A151CFFFEFAC</string>
 				<string>4C17D5CDFC900AB3BCDE412B</string>
 				<string>9D4D007F1CCD8097A6423E97</string>
@@ -944,6 +1126,8 @@
 				<string>1D374634814F22C287F61CCF</string>
 				<string>09F4F72A66159EE0D5F10284</string>
 				<string>884EA16F46192369BE17EE08</string>
+				<string>84D7599723D81DF62FBBD877</string>
+				<string>522386694E8F67E9CB44E135</string>
 				<string>5880A609F33164C203A62033</string>
 				<string>EC530D9BE21F8E51DDB5955F</string>
 				<string>7039C79789E51AEDFCF7C296</string>
@@ -1175,34 +1359,6 @@
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
-		<key>D0729C85A0925AFAC840F68A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>name</key>
-			<string>Prepare WidgetKit control size declarations</string>
-			<key>shellPath</key>
-			<string>/bin/bash</string>
-			<key>shellScript</key>
-			<string>bash "$SRCROOT/scripts/build-widgetkit-overlay.sh" "$DERIVED_FILE_DIR/WidgetKitSPI"
-</string>
-			<key>inputPaths</key>
-			<array>
-				<string>$(SRCROOT)/scripts/build-widgetkit-overlay.sh</string>
-				<string>$(SRCROOT)/scripts/widgetkit-spi.swiftinterface</string>
-				<string>$(SDKROOT)/System/Library/Frameworks/WidgetKit.framework/Versions/A/Modules/WidgetKit.swiftmodule/arm64e-apple-macos.swiftinterface</string>
-			</array>
-			<key>outputPaths</key>
-			<array>
-				<string>$(DERIVED_FILE_DIR)/WidgetKitSPI/WidgetKit.swiftmodule/arm64e-apple-macos.swiftinterface</string>
-			</array>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
 		<key>4E948F1E72F52C65C67F59A3</key>
 		<dict>
 			<key>isa</key>
@@ -1252,6 +1408,7 @@
 			<key>files</key>
 			<array>
 				<string>C0FF5D590C6286C735FBFF22</string>
+				<string>7AC9390DFA1BFD84CB22D461</string>
 			</array>
 			<key>name</key>
 			<string>Embed Controls</string>
@@ -1290,11 +1447,6 @@
 				<string>YES</string>
 				<key>MACOSX_DEPLOYMENT_TARGET</key>
 				<string>14.0</string>
-				<key>SWIFT_INCLUDE_PATHS</key>
-				<array>
-					<string>$(inherited)</string>
-					<string>$(DERIVED_FILE_DIR)/WidgetKitSPI</string>
-				</array>
 				<key>SWIFT_OPTIMIZATION_LEVEL</key>
 				<string>-Onone</string>
 				<key>GCC_OPTIMIZATION_LEVEL</key>
@@ -1335,11 +1487,6 @@
 				<string>YES</string>
 				<key>MACOSX_DEPLOYMENT_TARGET</key>
 				<string>14.0</string>
-				<key>SWIFT_INCLUDE_PATHS</key>
-				<array>
-					<string>$(inherited)</string>
-					<string>$(DERIVED_FILE_DIR)/WidgetKitSPI</string>
-				</array>
 				<key>SWIFT_OPTIMIZATION_LEVEL</key>
 				<string>-O</string>
 				<key>GCC_OPTIMIZATION_LEVEL</key>
@@ -1378,7 +1525,6 @@
 			<string>BD98151502478E2827517B50</string>
 			<key>buildPhases</key>
 			<array>
-				<string>D0729C85A0925AFAC840F68A</string>
 				<string>5D535257024E7B4E95766C21</string>
 				<string>3D4C94A1F7EE40CC0F15C675</string>
 			</array>
@@ -1604,6 +1750,602 @@
 			<key>dependencies</key>
 			<array/>
 		</dict>
+		<key>EC07520A16E1AEF60E3F6BAD</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>B845ED89CD9AC39BF93F5089</string>
+		</dict>
+		<key>598BFE4E17454EFA02988A00</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>DAFA1937FD6E9F63BC50A99F</string>
+		</dict>
+		<key>69060064EEE4EB374F5CE753</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>3FBFBC3207B8EF174DD47CF8</string>
+		</dict>
+		<key>8CD5C5C183000B506C912C05</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>EC07520A16E1AEF60E3F6BAD</string>
+				<string>598BFE4E17454EFA02988A00</string>
+				<string>69060064EEE4EB374F5CE753</string>
+			</array>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>1200C53C705A9628D00C60D2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>containerPortal</key>
+			<string>244210E48437B6556980A702</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>08D00371BADE33CB581C1EEE</string>
+			<key>remoteInfo</key>
+			<string>LockedGazeBrowserHost</string>
+		</dict>
+		<key>91EA1DCCC9876143BD27B5AE</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>08D00371BADE33CB581C1EEE</string>
+			<key>targetProxy</key>
+			<string>1200C53C705A9628D00C60D2</string>
+		</dict>
+		<key>195A8B8FC2911D940CE2B7A9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>763ED4B56434A90A85E9C144</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>CodeSignOnCopy</string>
+				</array>
+			</dict>
+		</dict>
+		<key>29B7C52E3538DFADD7F52B4B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXCopyFilesBuildPhase</string>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>dstPath</key>
+			<string>Contents/Helpers</string>
+			<key>dstSubfolderSpec</key>
+			<string>1</string>
+			<key>files</key>
+			<array>
+				<string>195A8B8FC2911D940CE2B7A9</string>
+			</array>
+			<key>name</key>
+			<string>Embed Browser Helper</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>EB0C27E29F5607A35E800754</key>
+		<dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+			<key>baseConfigurationReference</key>
+			<string>EE1E752050BF380B88186C3D</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>PRODUCT_NAME</key>
+				<string>LockedGazeBrowserHost</string>
+				<key>SWIFT_EMIT_LOC_STRINGS</key>
+				<string>NO</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>local.lockedgaze.app.browser-host</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Config/BrowserHost-Info.plist</string>
+				<key>CREATE_INFOPLIST_SECTION_IN_BINARY</key>
+				<string>YES</string>
+				<key>CODE_SIGN_ENTITLEMENTS</key>
+				<string>Config/BrowserHost.entitlements</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>ENABLE_APP_SANDBOX</key>
+				<string>YES</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-Onone</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+			</dict>
+		</dict>
+		<key>132D85F7981AA3D3BEF9B2CB</key>
+		<dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+			<key>baseConfigurationReference</key>
+			<string>EE1E752050BF380B88186C3D</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>PRODUCT_NAME</key>
+				<string>LockedGazeBrowserHost</string>
+				<key>SWIFT_EMIT_LOC_STRINGS</key>
+				<string>NO</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>local.lockedgaze.app.browser-host</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Config/BrowserHost-Info.plist</string>
+				<key>CREATE_INFOPLIST_SECTION_IN_BINARY</key>
+				<string>YES</string>
+				<key>CODE_SIGN_ENTITLEMENTS</key>
+				<string>Config/BrowserHost.entitlements</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>ENABLE_APP_SANDBOX</key>
+				<string>YES</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-O</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>3</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+			</dict>
+		</dict>
+		<key>A57DE12C5AC354B83BAE659E</key>
+		<dict>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+			<key>buildConfigurations</key>
+			<array>
+				<string>EB0C27E29F5607A35E800754</string>
+				<string>132D85F7981AA3D3BEF9B2CB</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+		</dict>
+		<key>08D00371BADE33CB581C1EEE</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>LockedGazeBrowserHost</string>
+			<key>productName</key>
+			<string>LockedGazeBrowserHost</string>
+			<key>productType</key>
+			<string>com.apple.product-type.tool</string>
+			<key>productReference</key>
+			<string>763ED4B56434A90A85E9C144</string>
+			<key>buildConfigurationList</key>
+			<string>A57DE12C5AC354B83BAE659E</string>
+			<key>buildPhases</key>
+			<array>
+				<string>8CD5C5C183000B506C912C05</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+		</dict>
+		<key>401B58730902B0AC55642498</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Extensions/Safari/manifest.json</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>text.json</string>
+		</dict>
+		<key>1F5C5614F78C5FEA9AB14142</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Extensions/Safari/background.js</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.javascript</string>
+		</dict>
+		<key>C0E865929247514FA036CDBA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Extensions/Shared/inject-main.js</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.javascript</string>
+		</dict>
+		<key>255D672C18203D05D48D48E3</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Extensions/Shared/inject-bridge.js</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.javascript</string>
+		</dict>
+		<key>CB581CA31E104D6DDB27EBAC</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Extensions/Shared/site-access.js</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.javascript</string>
+		</dict>
+		<key>D10814690DD895AA855E4E44</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Extensions/Shared/icons</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>folder</string>
+		</dict>
+		<key>25EA8FBBA1E969597A8B8FC4</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>DAFA1937FD6E9F63BC50A99F</string>
+		</dict>
+		<key>F4410AECD17877C5B5F94F40</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>3FBFBC3207B8EF174DD47CF8</string>
+		</dict>
+		<key>C16F39F2B66D4D208E6F52C6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>7B17546FADF77F1E9132FF2D</string>
+		</dict>
+		<key>13E028B3A27FBEB3B76359E2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>25EA8FBBA1E969597A8B8FC4</string>
+				<string>F4410AECD17877C5B5F94F40</string>
+				<string>C16F39F2B66D4D208E6F52C6</string>
+			</array>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>F28557FFB70291D2761B1BA6</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>401B58730902B0AC55642498</string>
+		</dict>
+		<key>4E23A005F189C7B23909CAA2</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>1F5C5614F78C5FEA9AB14142</string>
+		</dict>
+		<key>5C2CB6F623F8F7825F2585A3</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>C0E865929247514FA036CDBA</string>
+		</dict>
+		<key>A11ECFEE3CF34C99670CD62B</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>255D672C18203D05D48D48E3</string>
+		</dict>
+		<key>AAD5B6E078124B109366BD6D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>CB581CA31E104D6DDB27EBAC</string>
+		</dict>
+		<key>42C7E0FAA5033FC897214E75</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>D10814690DD895AA855E4E44</string>
+		</dict>
+		<key>AFD0A46A25CF9C7A11F92868</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>F28557FFB70291D2761B1BA6</string>
+				<string>4E23A005F189C7B23909CAA2</string>
+				<string>5C2CB6F623F8F7825F2585A3</string>
+				<string>A11ECFEE3CF34C99670CD62B</string>
+				<string>AAD5B6E078124B109366BD6D</string>
+				<string>42C7E0FAA5033FC897214E75</string>
+			</array>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>64C5AE54436227FFC9073DA0</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>containerPortal</key>
+			<string>244210E48437B6556980A702</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>D8E60EBBBB2B1A9D5F0DD2CF</string>
+			<key>remoteInfo</key>
+			<string>LockedGazeSafari</string>
+		</dict>
+		<key>507810FFCECB29D48E477835</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>D8E60EBBBB2B1A9D5F0DD2CF</string>
+			<key>targetProxy</key>
+			<string>64C5AE54436227FFC9073DA0</string>
+		</dict>
+		<key>7AC9390DFA1BFD84CB22D461</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>F65DB391C8B5667033454EBB</string>
+			<key>settings</key>
+			<dict>
+				<key>ATTRIBUTES</key>
+				<array>
+					<string>RemoveHeadersOnCopy</string>
+				</array>
+			</dict>
+		</dict>
+		<key>6D3E5E61572FF90DA51AA170</key>
+		<dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+			<key>baseConfigurationReference</key>
+			<string>EE1E752050BF380B88186C3D</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>PRODUCT_NAME</key>
+				<string>LockedGazeSafari</string>
+				<key>SWIFT_EMIT_LOC_STRINGS</key>
+				<string>NO</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>local.lockedgaze.app.safari</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Config/Safari-Info.plist</string>
+				<key>CODE_SIGN_ENTITLEMENTS</key>
+				<string>Config/Safari.entitlements</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>ENABLE_APP_SANDBOX</key>
+				<string>YES</string>
+				<key>APPLICATION_EXTENSION_API_ONLY</key>
+				<string>YES</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-Onone</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+			</dict>
+		</dict>
+		<key>679F5AF06829793F41582F34</key>
+		<dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+			<key>baseConfigurationReference</key>
+			<string>EE1E752050BF380B88186C3D</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>PRODUCT_NAME</key>
+				<string>LockedGazeSafari</string>
+				<key>SWIFT_EMIT_LOC_STRINGS</key>
+				<string>NO</string>
+				<key>COMBINE_HIDPI_IMAGES</key>
+				<string>YES</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>local.lockedgaze.app.safari</string>
+				<key>INFOPLIST_FILE</key>
+				<string>Config/Safari-Info.plist</string>
+				<key>CODE_SIGN_ENTITLEMENTS</key>
+				<string>Config/Safari.entitlements</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>ENABLE_APP_SANDBOX</key>
+				<string>YES</string>
+				<key>APPLICATION_EXTENSION_API_ONLY</key>
+				<string>YES</string>
+				<key>SWIFT_OPTIMIZATION_LEVEL</key>
+				<string>-O</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>3</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+			</dict>
+		</dict>
+		<key>D2357F2EFAE6A5C58DB527D3</key>
+		<dict>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+			<key>buildConfigurations</key>
+			<array>
+				<string>6D3E5E61572FF90DA51AA170</string>
+				<string>679F5AF06829793F41582F34</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+		</dict>
+		<key>D8E60EBBBB2B1A9D5F0DD2CF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>LockedGazeSafari</string>
+			<key>productName</key>
+			<string>LockedGazeSafari</string>
+			<key>productType</key>
+			<string>com.apple.product-type.app-extension</string>
+			<key>productReference</key>
+			<string>F65DB391C8B5667033454EBB</string>
+			<key>buildConfigurationList</key>
+			<string>D2357F2EFAE6A5C58DB527D3</string>
+			<key>buildPhases</key>
+			<array>
+				<string>13E028B3A27FBEB3B76359E2</string>
+				<string>AFD0A46A25CF9C7A11F92868</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+		</dict>
+		<key>78B9FA7EB79BA485A8B9D65E</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Extensions/Chrome/manifest.json</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>text.json</string>
+		</dict>
+		<key>52839826591294B3C56423BF</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Extensions/Chrome/background.js</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.javascript</string>
+		</dict>
+		<key>C48378EE1C0DDA0CC518CEEB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>78B9FA7EB79BA485A8B9D65E</string>
+		</dict>
+		<key>5CC272EEA04CA9DCBCF6252D</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>52839826591294B3C56423BF</string>
+		</dict>
+		<key>83438EE2CAF4C1208278DE25</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>C0E865929247514FA036CDBA</string>
+		</dict>
+		<key>FCC3C2EB31B0C2BA0BE89D2E</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>255D672C18203D05D48D48E3</string>
+		</dict>
+		<key>01287546C47C7D2EC64197CB</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>CB581CA31E104D6DDB27EBAC</string>
+		</dict>
+		<key>FCF8AF396653626D950D424E</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+			<key>fileRef</key>
+			<string>D10814690DD895AA855E4E44</string>
+		</dict>
+		<key>757D2A0A2D19EFFD27B259D9</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXCopyFilesBuildPhase</string>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>dstPath</key>
+			<string>ChromeExtension</string>
+			<key>dstSubfolderSpec</key>
+			<string>7</string>
+			<key>files</key>
+			<array>
+				<string>C48378EE1C0DDA0CC518CEEB</string>
+				<string>5CC272EEA04CA9DCBCF6252D</string>
+				<string>83438EE2CAF4C1208278DE25</string>
+				<string>FCC3C2EB31B0C2BA0BE89D2E</string>
+				<string>01287546C47C7D2EC64197CB</string>
+				<string>FCF8AF396653626D950D424E</string>
+			</array>
+			<key>name</key>
+			<string>Copy Chrome Extension</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
 		<key>2A04C20BF6D5C20A63A1D4CC</key>
 		<dict>
 			<key>isa</key>
@@ -1767,9 +2509,11 @@
 				<string>45666D976BAB316D970EC459</string>
 				<string>AFF87A50730392B6633ACECE</string>
 				<string>41D311A605520FC7B8B9A980</string>
+				<string>757D2A0A2D19EFFD27B259D9</string>
 				<string>2FCDAD1C40F5D8DBFBA9E52D</string>
 				<string>21D3B03B8091285D3EE5BEB8</string>
 				<string>1614C1F057C2D19D8E9C3189</string>
+				<string>29B7C52E3538DFADD7F52B4B</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -1778,6 +2522,8 @@
 				<string>965FF32F58B180754D654307</string>
 				<string>2D88F375B69B0D4D34E89A6C</string>
 				<string>1C92498ADE5FA65855A8F243</string>
+				<string>91EA1DCCC9876143BD27B5AE</string>
+				<string>507810FFCECB29D48E477835</string>
 			</array>
 		</dict>
 		<key>2487E269319F54D3C5BC970F</key>
@@ -1927,6 +2673,8 @@
 				<string>26F1DE33979D065BA8D86789</string>
 				<string>1E2135D1B50F14D3D3D6CBE2</string>
 				<string>4F03A060B7EB032972DCB327</string>
+				<string>08D00371BADE33CB581C1EEE</string>
+				<string>D8E60EBBBB2B1A9D5F0DD2CF</string>
 			</array>
 		</dict>
 	</dict>

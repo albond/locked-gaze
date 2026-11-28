@@ -77,6 +77,7 @@ struct PreviewView: View {
         case .off: "Locked Gaze is off. Choose Locked Gaze to send the view on the right to calls."
         case .passThrough: "Pass-through: calls receive the original view on the left."
         case .lockedGaze: "Calls using the Locked Gaze camera see the view on the right."
+        case .browser: "Browser: meetings in your web browser that choose Locked Gaze Camera see the view on the right."
         }
     }
 

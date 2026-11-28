@@ -18,6 +18,10 @@ import subprocess, sys
 subprocess.run(["build/stability/" + sys.argv[1], *sys.argv[2:]], check=True, timeout=180)
 PYTEST
 }
+xcrun swiftc "${swift[@]}" Sources/BrowserIPC/BrowserContract.swift Sources/BrowserIPC/FrameSubscriber.swift Sources/BrowserHost/main.swift -o build/stability/LockedGazeBrowserHost
+xcrun swiftc "${swift[@]}" Sources/BrowserIPC/BrowserContract.swift Sources/App/BrowserFeed.swift Sources/Shared/CameraContract.swift \
+    Sources/Core/PixelCopy.swift Tests/BrowserFeedTests/main.swift -o build/stability/BrowserFeedTests
+run BrowserFeedTests "$PWD/build/stability/LockedGazeBrowserHost"
 xcrun swiftc "${swift[@]}" Sources/Core/LatestFrameWorker.swift Tests/FrameWorkerTests/main.swift -o build/stability/FrameWorkerTests
 run FrameWorkerTests
 xcrun swiftc "${swift[@]}" Sources/Core/ReplyOnce.swift Tests/ReplyOnceTests/main.swift -o build/stability/ReplyOnceTests
@@ -48,4 +52,4 @@ xcrun swiftc "${swift[@]}" Sources/Core/GazeError.swift Sources/Core/GazeMode.sw
 run ModePanelTests
 xcrun swiftc "${swift[@]}" -import-objc-header Native/include/LGFramePipeline.h Tests/NativeTests/main.swift "${native[@]}" -o build/stability/NativeTests
 run NativeTests
-echo 'All fifteen source-only stability suites passed.'
+echo 'All sixteen source-only stability suites passed.'

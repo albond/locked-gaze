@@ -58,6 +58,10 @@ final class ModePanelModel: ObservableObject {
     /// The checked mode: where the camera is or is going.
     @Published var mode = GazeMode.off
     @Published var canSwitch = true
+    /// Modes this Mac cannot run, such as the virtual camera modes under device management.
+    @Published var unavailable: Set<GazeMode> = []
+    /// Modes left out of the switch, such as Browser on a Mac whose virtual camera works.
+    @Published var hidden: Set<GazeMode> = []
     /// Shown next to the title while the camera changes state.
     @Published var transition: String?
     @Published var cameras: [PanelCamera] = []
@@ -142,11 +146,12 @@ struct ModePanelView: View {
         case .off: "eye.slash"
         case .passThrough: "video"
         case .lockedGaze: "eye"
+        case .browser: "globe"
         }
     }
 }
 
-/// Three labelled segments; the selected one carries the knob.
+/// One labelled segment per mode; the selected one carries the knob.
 private struct ModeSwitch: View {
     @ObservedObject var model: ModePanelModel
     let palette: PanelPalette
@@ -165,7 +170,7 @@ private struct ModeSwitch: View {
     }
 
     @ViewBuilder private var segments: some View {
-        let row = HStack(spacing: 2) { ForEach(GazeMode.allCases, id: \.self) { segment($0) } }
+        let row = HStack(spacing: 2) { ForEach(GazeMode.allCases.filter { !model.hidden.contains($0) }, id: \.self) { segment($0) } }
         if #available(macOS 26.0, *) {
             GlassEffectContainer(spacing: 0) { row }
         } else {
@@ -175,6 +180,7 @@ private struct ModeSwitch: View {
 
     private func segment(_ option: GazeMode) -> some View {
         let selected = option == model.mode
+        let available = !model.unavailable.contains(option)
         return Button { model.choose(option) } label: {
             VStack(spacing: 3) {
                 Image(systemName: ModePanelView.symbol(option)).font(.system(size: 15, weight: .semibold))
@@ -186,8 +192,9 @@ private struct ModeSwitch: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .disabled(!model.canSwitch)
-        .help(option.title)
+        .disabled(!model.canSwitch || !available)
+        .opacity(available ? 1 : 0.4)
+        .help(available ? option.title : "\(option.title) needs the virtual camera, which this Mac blocks")
         .accessibilityLabel(option.title)
         .accessibilityAddTraits(selected ? .isSelected : [])
     }
@@ -331,20 +338,15 @@ final class ModePanel: NSObject, NSWindowDelegate {
         return panel
     }
 
-    /// System liquid glass. The public styles look flat next to Control Center; variant 11 with
-    /// adaptive appearance 0 is the clear glass, and its scrim keeps the text readable over busy
-    /// windows. These keys are private, so they are set only while AppKit still has them;
-    /// otherwise the public regular style remains.
+    /// System liquid glass, in the public regular style: it keeps the text readable over busy
+    /// windows. The clear style does not.
     private static func glass(around content: NSView) -> NSView {
         let radius: CGFloat = 16
         let container: NSView
         if #available(macOS 26.0, *) {
             let glass = NSGlassEffectView()
             glass.cornerRadius = radius
-            for (key, value) in [("_variant", 11), ("_adaptiveAppearance", 0), ("_scrimState", 1)]
-            where glass.responds(to: NSSelectorFromString("set\(key):")) {
-                glass.setValue(value, forKey: key)
-            }
+            glass.style = .regular
             glass.contentView = content
             container = glass
         } else {

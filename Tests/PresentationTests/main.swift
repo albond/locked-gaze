@@ -13,7 +13,7 @@ for icon in icons {
     precondition(icon.isTemplate && icon.size == NSSize(width: 22, height: 18))
     precondition(icon.tiffRepresentation != nil)
 }
-precondition(Set(icons.map { $0.tiffRepresentation! }).count == 3, "Each mode needs its own status icon")
+precondition(Set(icons.map { $0.tiffRepresentation! }).count == GazeMode.allCases.count, "Each mode needs its own status icon")
 let review = URLComponents(url: AppStoreLinks.writeReview, resolvingAgainstBaseURL: false)!
 precondition(review.scheme == "macappstore" && review.host == "apps.apple.com" && review.path == "/app/id6814174298")
 precondition(review.queryItems == [URLQueryItem(name: "action", value: "write-review")])
@@ -43,4 +43,9 @@ for (state, correcting, mode, icon, status, enabled, badge) in [
     let closing = CameraPresentation(state: state, correcting: correcting, closing: true)
     precondition(closing.mode == .off && closing.iconMode == .off && !closing.canSwitch && closing.status == "Stopping…")
 }
+let browser = CameraPresentation(state: .idle, correcting: true, browsing: true)
+precondition(browser.mode == .browser && browser.iconMode == .browser && browser.status == "Browser" && browser.canSwitch && browser.dockBadge == "Web")
+precondition(CameraPresentation(state: .idle, correcting: true, browsing: true, closing: true).mode == .off)
+precondition(CameraPresentation(state: .stopping, correcting: true, browsing: true).status == "Stopping…")
+precondition(GazeMode.allCases.filter(\.usesVirtualCamera) == [.passThrough, .lockedGaze])
 print("PASS: checked mode, availability, status icon, Dock state and termination override")

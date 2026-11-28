@@ -11,6 +11,7 @@ struct LockedGazeControls: WidgetBundle {
             LockedGazeControl()
             PassThroughControl()
             OffControl()
+            BrowserControl()
         }
     }
 }
@@ -19,17 +20,6 @@ struct LockedGazeControls: WidgetBundle {
 @available(macOS 26.0, *)
 struct ModePanelControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
-        // Starts wide, like the other panel buttons in Control Center; people can still resize
-        // it. WidgetKit has this API without publishing it (scripts/widgetkit-spi.swiftinterface),
-        // so older systems take the plain branch and never load the symbol.
-        if #available(macOS 26.5, *) {
-            return configuration.preferredControlSize(.medium)
-        } else {
-            return configuration
-        }
-    }
-
-    private var configuration: some ControlWidgetConfiguration {
         StaticControlConfiguration(kind: GazeControlState.panelKind, provider: Provider()) { mode in
             ControlWidgetButton(action: ShowModePanelIntent()) {
                 // The chevron says the button opens a panel, as Control Center modules do.
@@ -54,13 +44,13 @@ struct ModePanelControl: ControlWidget {
 }
 
 /// One Control Center toggle per mode. The lit one is the current mode; side by side
-/// they work as a three-position switch, in any size Control Center offers.
+/// they work as a four-position switch, in any size Control Center offers.
 @available(macOS 26.0, *)
 struct LockedGazeControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
         ModeControl.configuration(kind: GazeControlState.kind, mode: .lockedGaze, action: SetLockedGazeIntent())
             .displayName("Locked Gaze")
-            .description("Correct eye contact. Add Pass-through and Off next to it for a three-way switch.")
+            .description("Correct eye contact. Add Pass-through, Browser and Off next to it for a full mode switch.")
     }
 }
 
@@ -79,6 +69,15 @@ struct OffControl: ControlWidget {
         ModeControl.configuration(kind: GazeControlState.offKind, mode: .off, action: SetGazeOffIntent())
             .displayName("Locked Gaze Off")
             .description("Stop the Locked Gaze camera.")
+    }
+}
+
+@available(macOS 26.0, *)
+struct BrowserControl: ControlWidget {
+    var body: some ControlWidgetConfiguration {
+        ModeControl.configuration(kind: GazeControlState.browserKind, mode: .browser, action: SetBrowserIntent())
+            .displayName("Browser")
+            .description("Correct eye contact for meetings in your web browser only.")
     }
 }
 
@@ -105,8 +104,9 @@ enum ModeControl {
         case .off: on ? "eye.slash.fill" : "eye.slash"
         case .passThrough: on ? "video.fill" : "video"
         case .lockedGaze: on ? "eye.fill" : "eye"
+        case .browser: on ? "globe.americas.fill" : "globe"
         }
     }
-    /// The widget's knob colour, so the three cells read as one switch.
+    /// The widget's knob colour, so the cells read as one switch.
     static func tint(_ mode: GazeMode) -> Color { Color(red: 0xF7 / 255, green: 0xA9 / 255, blue: 0x82 / 255) }
 }

@@ -15,7 +15,7 @@
   <a href="#download-for-mac"><img src="https://img.shields.io/badge/macOS-14%2B-000?logo=apple&amp;logoColor=white&amp;style=flat-square" alt="macOS 14 or later"></a>
   <a href="#download-for-mac"><img src="https://img.shields.io/badge/Apple_Silicon-M2_or_newer-555?logo=apple&amp;logoColor=white&amp;style=flat-square" alt="Apple Silicon M2 or newer; see requirements"></a>
   <a href="https://developer.apple.com/documentation/swiftui"><img src="https://img.shields.io/badge/SwiftUI-%2B%20AppKit-1F6FEB?style=flat-square" alt="SwiftUI and AppKit"></a>
-  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/Source-1.1.0-E57B4F?style=flat-square" alt="Source version 1.1.0 — see what's new"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/Source-1.2.0-E57B4F?style=flat-square" alt="Source version 1.2.0 — see what's new"></a>
 </p>
 
 <p align="center">
@@ -51,6 +51,7 @@ Your camera frames stay on your Mac. Eye-contact correction runs entirely on you
 - **See it before your call.** Preview shows your camera and the corrected view side by side, without starting a meeting. Nothing is recorded.
 - **Your choice of camera.** Select a webcam or use your iPhone through Continuity Camera.
 - **A camera you can select.** Choose **Locked Gaze** in video apps that support macOS virtual cameras.
+- **Web meetings on managed Macs.** If your organization blocks camera extensions, Browser mode adds **Locked Gaze Camera** to Google Meet, Microsoft Teams, Zoom, Webex, Jitsi, Whereby, Slack, Discord and Preply in Safari or Chrome, and any other site you turn on from the extension button. Video goes from Locked Gaze to your browser on your Mac only.
 - **Made for Apple Silicon.** Local processing built around your Mac.
 
 ## Three simple steps

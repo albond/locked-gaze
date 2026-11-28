@@ -9,6 +9,11 @@ final class ExtensionInstaller: NSObject, @preconcurrency OSSystemExtensionReque
             "Allow the Locked Gaze camera extension in System Settings, then click Check Again. On macOS 15 or later, open General > Login Items & Extensions > Camera Extensions. On macOS 14, open Privacy & Security."
         }
     }
+    /// Error 10: device management forbids the extension, so the virtual camera cannot work here.
+    struct PolicyError: LocalizedError {
+        let message: String
+        var errorDescription: String? { message }
+    }
     private var continuation: CheckedContinuation<Void, Error>?
     private var request: OSSystemExtensionRequest?
 
@@ -66,7 +71,7 @@ final class ExtensionInstaller: NSObject, @preconcurrency OSSystemExtensionReque
         // Error 10: the organization's device management does not allow this extension.
         // Settings cannot change that, so name what the IT administrator has to allow.
         if (error as? OSSystemExtensionError)?.code == .forbiddenBySystemPolicy {
-            complete(.failure(GazeError.message(Self.policyMessage(team: Self.teamID))))
+            complete(.failure(PolicyError(message: Self.policyMessage(team: Self.teamID))))
             return
         }
         complete(.failure(error))
@@ -92,7 +97,7 @@ final class ExtensionInstaller: NSObject, @preconcurrency OSSystemExtensionReque
     }
     static func policyMessage(team: String?) -> String {
         let source = team.map { " from team \($0)" } ?? ""
-        return "Your organization's policy for this Mac blocks the Locked Gaze camera extension, so other apps can't use the Locked Gaze camera. Ask your IT administrator to allow the system extension \(CameraContract.extensionID)\(source). Preview still works."
+        return "Your organization's policy for this Mac blocks the Locked Gaze camera extension, so other apps can't use the Locked Gaze camera. Ask your IT administrator to allow the system extension \(CameraContract.extensionID)\(source). Choose Browser to use Locked Gaze in meetings in your web browser; Preview still works."
     }
     /// The signing team, from the App Group name "<team>.local.lockedgaze.app".
     private static var teamID: String? {

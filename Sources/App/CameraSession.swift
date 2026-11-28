@@ -4,7 +4,8 @@ import CoreVideo
 import Foundation
 
 // Capture configuration lives on sessionQueue; models/pixels on processingQueue.
-// CMIO publishing runs in an isolated XPC service. Lifecycle is main-actor isolated.
+// CMIO publishing runs in an isolated XPC service; the browser feed encodes on its own queue.
+// Lifecycle is main-actor isolated.
 final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, @unchecked Sendable {
     private let sessionQueue = DispatchQueue(label: "local.lockedgaze.capture")
     private let deliveryQueue = DispatchQueue(label: "local.lockedgaze.delivery", qos: .userInitiated)
@@ -17,6 +18,7 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
     private var modelStore: ModelStore?
     private let publisher = CameraPublisherClient()
     private let preview: PreviewFeed
+    private let browser: BrowserFeed?
     private var publishing = true
     private var correcting = true
     private var pipelineWarm = false
@@ -32,8 +34,9 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
     @MainActor private var generation = 0
     @MainActor var onFailure: ((Error) -> Void)?
 
-    init(preview: PreviewFeed) {
+    init(preview: PreviewFeed, browser: BrowserFeed? = nil) {
         self.preview = preview
+        self.browser = browser
         super.init()
         worker = LatestFrameWorker(queue: processingQueue) { [weak self] frame in self?.process(frame) }
     }
@@ -236,6 +239,11 @@ final class CameraSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegat
                         // Pass-through, or Locked Gaze while its models are still loading.
                         try publisher.send(original)
                     }
+                }
+                // The browser camera shows what the virtual camera would show (LG-009).
+                if let browser, browser.isWanted, let shown = correcting && pipeline != nil ? corrected : input {
+                    let age = ProcessInfo.processInfo.systemUptime - frame.receivedAt
+                    browser.submit(shown, capturedAt: (Date().timeIntervalSince1970 - age) * 1000)
                 }
                 if let corrected { preview.submit(original: input, corrected: corrected) }
             } catch {

@@ -16,7 +16,7 @@ precondition(reader.mode { _ in true } == .off, "A missing snapshot means Off")
 // Keep the reader alive while distinct writer processes publish every mode in
 // turn. Each completed write must be visible on the very first read.
 for index in 0..<21 {
-    let mode = GazeMode.allCases[index % 3]
+    let mode = GazeMode.allCases[index % GazeMode.allCases.count]
     let writer = Process()
     writer.executableURL = URL(fileURLWithPath: CommandLine.arguments[0])
     writer.arguments = ["--write", url.path, mode.rawValue]
@@ -24,12 +24,16 @@ for index in 0..<21 {
     precondition(writer.terminationStatus == 0)
     precondition(reader.mode { $0 == 42 } == mode, "Stale cross-process control state")
 }
+try reader.publish(mode: .browser, processID: 42, virtualCameraBlocked: true)
+precondition(reader.virtualCameraBlocked && reader.mode { _ in true } == .browser, "Blocked virtual camera is shared")
 try reader.publish(mode: .lockedGaze, processID: 42)
+precondition(!reader.virtualCameraBlocked)
 precondition(reader.mode { _ in false } == .off, "An exited host must not leave a running mode")
 try reader.publish(mode: .off, processID: 42)
 precondition(reader.mode { _ in preconditionFailure("An Off snapshot must not query a host") } == .off)
 try Data(#"{"active":true,"processID":42}"#.utf8).write(to: url)
 precondition(reader.mode { _ in true } == .off, "A snapshot from 1.0.1 reads as Off")
+precondition(!reader.virtualCameraBlocked, "A snapshot without the flag is not blocked")
 try Data("invalid snapshot".utf8).write(to: url)
 precondition(reader.mode { _ in true } == .off, "Corrupt state must fail closed")
-print("PASS: fresh cross-process mode state for all three modes; missing, older or corrupt state and a stopped host read as Off")
+print("PASS: fresh cross-process mode state for all four modes, the blocked virtual camera flag; missing, older or corrupt state and a stopped host read as Off")

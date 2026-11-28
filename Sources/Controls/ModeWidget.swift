@@ -5,14 +5,15 @@ import WidgetKit
 struct ModeEntry: TimelineEntry {
     let date: Date
     let mode: GazeMode
+    var virtualCameraBlocked = false
 }
 
-/// A three-position switch for the desktop and Notification Center. It sits on the system
+/// A four-position switch for the desktop and Notification Center. It sits on the system
 /// widget background like Apple's widgets; the peach accent marks the title and the knob.
 struct ModeWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: GazeControlState.widgetKind, provider: Provider()) { entry in
-            ModeWidgetView(mode: entry.mode)
+            ModeWidgetView(mode: entry.mode, virtualCameraBlocked: entry.virtualCameraBlocked)
                 .containerBackground(.background, for: .widget)
         }
         .configurationDisplayName("Locked Gaze")
@@ -23,11 +24,13 @@ struct ModeWidget: Widget {
     struct Provider: TimelineProvider {
         func placeholder(in context: Context) -> ModeEntry { ModeEntry(date: .now, mode: .lockedGaze) }
         func getSnapshot(in context: Context, completion: @escaping (ModeEntry) -> Void) {
-            completion(ModeEntry(date: .now, mode: context.isPreview ? .lockedGaze : GazeControlState.mode))
+            completion(context.isPreview ? ModeEntry(date: .now, mode: .lockedGaze)
+                       : ModeEntry(date: .now, mode: GazeControlState.mode, virtualCameraBlocked: GazeControlState.virtualCameraBlocked))
         }
         // The host reloads this timeline whenever the mode changes.
         func getTimeline(in context: Context, completion: @escaping (Timeline<ModeEntry>) -> Void) {
-            completion(Timeline(entries: [ModeEntry(date: .now, mode: GazeControlState.mode)], policy: .never))
+            completion(Timeline(entries: [ModeEntry(date: .now, mode: GazeControlState.mode,
+                                                    virtualCameraBlocked: GazeControlState.virtualCameraBlocked)], policy: .never))
         }
     }
 }
@@ -50,6 +53,8 @@ struct WidgetPalette {
 /// that mode, laid out like Apple's widgets.
 struct ModeWidgetView: View {
     let mode: GazeMode
+    /// Pass-through and Locked Gaze are dimmed; the host refuses them on such a Mac.
+    var virtualCameraBlocked = false
     /// Overrides the environment family, for rendering outside WidgetKit.
     var familyOverride: WidgetFamily?
     @Environment(\.widgetFamily) private var environmentFamily
@@ -82,7 +87,8 @@ struct ModeWidgetView: View {
 
     private var track: some View {
         HStack(spacing: 0) {
-            ForEach(GazeMode.allCases, id: \.self) { segment($0) }
+            // Browser appears only on a Mac whose device management blocks the virtual camera.
+            ForEach(GazeMode.allCases.filter { $0 != .browser || virtualCameraBlocked || mode == .browser }, id: \.self) { segment($0) }
         }
         .padding(3)
         .background(Capsule().fill(fullColor ? palette.track : Color.primary.opacity(0.14)))
@@ -90,11 +96,13 @@ struct ModeWidgetView: View {
 
     private func segment(_ option: GazeMode) -> some View {
         let selected = option == mode
+        let available = !(virtualCameraBlocked && option.usesVirtualCamera)
         return Button(intent: SelectGazeModeIntent(mode: option)) {
             Image(systemName: Self.symbol(option))
                 .font(.system(size: small ? 15 : 18, weight: .semibold))
                 .frame(maxWidth: .infinity, minHeight: small ? 34 : 40)
                 .foregroundStyle(foreground(selected))
+                .opacity(available ? 1 : 0.35)
                 .background { if selected { knob } }
                 .contentShape(Capsule())
         }
@@ -122,6 +130,7 @@ struct ModeWidgetView: View {
         case .off: "eye.slash"
         case .passThrough: "video"
         case .lockedGaze: "eye"
+        case .browser: "globe"
         }
     }
 }

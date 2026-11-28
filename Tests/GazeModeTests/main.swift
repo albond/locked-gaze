@@ -36,6 +36,21 @@ import Foundation
         precondition(modes.target == .off && !modes.correcting)
         print("PASS: Off, Pass-through and Locked Gaze in every order; running modes switch without a restart")
 
+        // Browser keeps the virtual camera session stopped; leaving it for a running mode starts it.
+        events.removeAll()
+        try await modes.set(.lockedGaze)
+        try await modes.set(.browser)
+        precondition(events == ["start", "stop"] && lifecycle.state == .idle && modes.target == .browser && modes.browsing)
+        try await modes.set(.browser); precondition(events.count == 2, "Re-selecting Browser is a no-op")
+        try await modes.set(.passThrough)
+        precondition(events == ["start", "stop", "start"] && modes.target == .passThrough && !modes.browsing)
+        try await modes.set(.browser); try await modes.set(.off)
+        precondition(modes.target == .off && !modes.browsing && lifecycle.state == .idle && events.count == 4)
+        try await modes.set(.browser); try await modes.set(.lockedGaze)
+        precondition(modes.target == .lockedGaze && correction.last == true && lifecycle.state == .active)
+        try await modes.set(.off)
+        print("PASS: Browser stops the virtual camera session and hands over to every other mode")
+
         // While the camera is starting, a running mode only changes correction for that start.
         let gate = Latch(); var starts = 0
         let slow = CameraLifecycle(prepare: { await gate.wait() }, start: { starts += 1 }, stop: {})
@@ -57,6 +72,8 @@ import Foundation
         let stop = Task { try await stoppingModes.set(.off) }
         while stopGate.continuation == nil { await Task.yield() }
         do { try await stoppingModes.set(.passThrough); preconditionFailure("Accepted a mode while stopping") } catch {}
+        do { try await stoppingModes.set(.browser); preconditionFailure("Accepted Browser while stopping") } catch {}
+        precondition(!stoppingModes.browsing)
         precondition(stoppingModes.correcting)
         stopGate.release(); try await stop.value
         precondition(stopping.state == .idle)

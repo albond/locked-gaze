@@ -69,7 +69,7 @@ final class PermissionPrompt: NSObject, NSWindowDelegate {
                 retry: { [weak self] in self?.finish(true) },
                 cancel: { [weak self] in self?.finish(false) }))
             self.window = window
-            window.center()
+            window.centerOnActiveScreen()
             NSApp.activate(ignoringOtherApps: true)
             window.makeKeyAndOrderFront(nil)
         }

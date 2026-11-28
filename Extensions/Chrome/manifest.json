@@ -1,0 +1,79 @@
+{
+  "manifest_version": 3,
+  "name": "Locked Gaze Camera",
+  "version": "1.2.0",
+  "description": "Only for Macs that block the Locked Gaze camera: adds it to web meetings. Otherwise leave it off.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuRaEArsJ5+RVheZKrb86NK1ZTvORZ37zsM9iSg1s2iNFj9KHWV0V7x7QOogvDis40oEArOI7U4V4KKh7wPi2tCeXoAP857C/Kd3MmtO0837IDciL/8Gx6wGzJKo9oU7/aLhSv302l8abN1P3uwrgkC7Top2PCNb60+rswrzb4D/3ROQv7IcuZCSb3Z8tRSipds7/p/l1LY3obvnMWNiwV/QYoom1YW7g/t8rv1nWMCCJa8Td7NUZHPLBCOBufX8V5lFSjrjogB7B8KtVsv751x1Bz8AVZ73oB3/G04aanjWBhOSHTlvUgaK78HJ604v75KH0/36Q/qs9LaVAUo+DRQIDAQAB",
+  "permissions": [
+    "nativeMessaging",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://teams.microsoft.com/*",
+        "https://teams.live.com/*",
+        "https://teams.cloud.microsoft/*",
+        "https://*.zoom.us/*",
+        "https://*.webex.com/*",
+        "https://meet.jit.si/*",
+        "https://8x8.vc/*",
+        "https://whereby.com/*",
+        "https://app.slack.com/*",
+        "https://discord.com/*",
+        "https://preply.com/*",
+        "https://*.preply.com/*"
+      ],
+      "js": [
+        "inject-main.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://teams.microsoft.com/*",
+        "https://teams.live.com/*",
+        "https://teams.cloud.microsoft/*",
+        "https://*.zoom.us/*",
+        "https://*.webex.com/*",
+        "https://meet.jit.si/*",
+        "https://8x8.vc/*",
+        "https://whereby.com/*",
+        "https://app.slack.com/*",
+        "https://discord.com/*",
+        "https://preply.com/*",
+        "https://*.preply.com/*"
+      ],
+      "js": [
+        "inject-bridge.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "optional_host_permissions": [
+    "https://*/*"
+  ],
+  "action": {
+    "default_title": "Click to use Locked Gaze Camera on this site",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  }
+}

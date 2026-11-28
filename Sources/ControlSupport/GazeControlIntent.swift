@@ -9,6 +9,7 @@ enum GazeControlState {
     static let kind = "local.lockedgaze.app.eye-contact"
     static let passThroughKind = "local.lockedgaze.app.mode.pass-through"
     static let offKind = "local.lockedgaze.app.mode.off"
+    static let browserKind = "local.lockedgaze.app.mode.browser"
     static let widgetKind = "local.lockedgaze.app.mode-widget"
     static let panelKind = "local.lockedgaze.app.mode-panel"
     private static var store: ControlStateStore? {
@@ -22,16 +23,18 @@ enum GazeControlState {
             NSRunningApplication(processIdentifier: pid)?.bundleIdentifier == "local.lockedgaze.app"
         } ?? .off
     }
+    /// Device management blocks the virtual camera, so Pass-through and Locked Gaze cannot run.
+    static var virtualCameraBlocked: Bool { store?.virtualCameraBlocked ?? false }
     /// True once a host since 1.0.1 has launched on this Mac; read it before the first publish.
     static var hasPublishedState: Bool {
         store.map { FileManager.default.fileExists(atPath: $0.url.path) } ?? false
     }
     @MainActor static var setMode: ((GazeMode) async throws -> Void)?
     @MainActor static var showPanel: (() -> Void)?
-    @MainActor static func publish(_ mode: GazeMode) {
+    @MainActor static func publish(_ mode: GazeMode, virtualCameraBlocked: Bool = false) {
         do {
             guard let store else { throw CocoaError(.fileNoSuchFile) }
-            try store.publish(mode: mode, processID: ProcessInfo.processInfo.processIdentifier)
+            try store.publish(mode: mode, processID: ProcessInfo.processInfo.processIdentifier, virtualCameraBlocked: virtualCameraBlocked)
         } catch {
             Logger(subsystem: "local.lockedgaze.app", category: "ControlState").error("Cannot publish camera control state: \(error.localizedDescription, privacy: .public)")
         }
@@ -53,10 +56,10 @@ enum GazeControlState {
 }
 
 enum GazeModeOption: String, AppEnum {
-    case off, passThrough, lockedGaze
+    case off, passThrough, lockedGaze, browser
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "Mode"
     static var caseDisplayRepresentations: [GazeModeOption: DisplayRepresentation] = [
-        .off: "Off", .passThrough: "Pass-through", .lockedGaze: "Locked Gaze"
+        .off: "Off", .passThrough: "Pass-through", .lockedGaze: "Locked Gaze", .browser: "Browser"
     ]
     init(_ mode: GazeMode) { self = GazeModeOption(rawValue: mode.rawValue) ?? .off }
     var mode: GazeMode { GazeMode(rawValue: rawValue) ?? .off }
@@ -65,7 +68,7 @@ enum GazeModeOption: String, AppEnum {
 /// Desktop widget buttons. The host app owns the camera, so the intent runs there.
 struct SelectGazeModeIntent: AppIntent {
     static var title: LocalizedStringResource = "Choose Locked Gaze Mode"
-    static var description = IntentDescription("Switch Locked Gaze off, to pass-through, or to eye contact correction on this Mac.")
+    static var description = IntentDescription("Switch Locked Gaze off, to pass-through, to eye contact correction, or to eye contact correction for web browsers only.")
     static var openAppWhenRun = true
     @Parameter(title: "Mode") var mode: GazeModeOption
 
@@ -116,7 +119,19 @@ struct SetGazeOffIntent: SetValueIntent {
     }
 }
 
-/// The Control Center button. Control Center has no three-way control, so the host
+@available(macOS 26.0, *)
+struct SetBrowserIntent: SetValueIntent {
+    static var title: LocalizedStringResource = "Set Browser"
+    static var description = IntentDescription("Correct eye contact for meetings in your web browser only, or switch Locked Gaze off.")
+    static var supportedModes: IntentModes { .foreground }
+    @Parameter(title: "Browser") var value: Bool
+    @MainActor func perform() async throws -> some IntentResult {
+        try await GazeControlState.select(.browser, on: value)
+        return .result()
+    }
+}
+
+/// The Control Center button. Control Center has no multi-position control, so the host
 /// shows its own panel with the mode switch and source cameras.
 @available(macOS 26.0, *)
 struct ShowModePanelIntent: AppIntent {

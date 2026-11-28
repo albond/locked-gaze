@@ -45,14 +45,12 @@ enum AppStoreLinks {
 enum ReleaseNotes {
     struct Item { let symbol: String; let title: String; let detail: String }
     static let items = [
-        Item(symbol: "switch.2", title: "Three modes",
-             detail: "Off, Pass-through and Locked Gaze: turn correction off without leaving the Locked Gaze camera."),
-        Item(symbol: "widget.small", title: "Widget and Control Center",
-             detail: "Switch modes from a desktop widget or Control Center, where Mode and Camera also picks the source camera."),
-        Item(symbol: "rectangle.split.2x1", title: "Preview",
-             detail: "See your camera and the corrected view side by side before a call."),
-        Item(symbol: "laptopcomputer", title: "More Macs",
-             detail: "Runs on Apple M2 and newer chips, including MacBook Air."),
+        Item(symbol: "globe", title: "Browser mode",
+             detail: "If your Mac's management blocks the Locked Gaze camera, use Locked Gaze in Google Meet, Teams, Zoom and other web meetings in Safari or Chrome."),
+        Item(symbol: "lock.shield", title: "Still on your Mac",
+             detail: "Video goes from Locked Gaze straight to your browser on this Mac. Nothing is sent online, and a site gets video only after you allow its camera."),
+        Item(symbol: "list.number", title: "Guided setup",
+             detail: "Set Up Google Chrome walks you through each step; in Safari, turn on Locked Gaze Camera in Settings › Extensions."),
     ]
     /// Once after an update; never on a first install or after a downgrade.
     static func shouldShow(lastLaunched: String?, current: String, launchedBefore: Bool) -> Bool {
@@ -63,6 +61,7 @@ enum ReleaseNotes {
 
 enum MenuIcon {
     /// Off: outlined iris. Pass-through: outlined iris with a pupil. Locked Gaze: filled iris.
+    /// Browser: an iris drawn as a small globe.
     static func image(mode: GazeMode) -> NSImage {
         let image = NSImage(size: NSSize(width: 22, height: 18), flipped: false) { _ in
             NSColor.black.set()
@@ -82,6 +81,13 @@ enum MenuIcon {
                 iris.fill()
                 NSGraphicsContext.current?.compositingOperation = .clear
                 NSBezierPath(ovalIn: NSRect(x: 9, y: 9, width: 2, height: 2)).fill()
+            case .browser:
+                iris.lineWidth = 1.4; iris.stroke()
+                let meridian = NSBezierPath(ovalIn: NSRect(x: 9.6, y: 5.5, width: 2.8, height: 7))
+                meridian.lineWidth = 1; meridian.stroke()
+                let equator = NSBezierPath()
+                equator.move(to: NSPoint(x: 7.5, y: 9)); equator.line(to: NSPoint(x: 14.5, y: 9))
+                equator.lineWidth = 1; equator.stroke()
             }
             return true
         }
@@ -266,6 +272,19 @@ struct AboutView: View {
 }
 
 @MainActor
+extension NSWindow {
+    /// Sizes the window to its SwiftUI content first, then centres it on the screen with the
+    /// pointer. `center()` alone runs before the content has a size and sits above centre.
+    func centerOnActiveScreen() {
+        if let content = contentView { setContentSize(content.fittingSize) }
+        let mouse = NSEvent.mouseLocation
+        guard let screen = NSScreen.screens.first(where: { NSMouseInRect(mouse, $0.frame, false) }) ?? NSScreen.main else { center(); return }
+        let area = screen.visibleFrame
+        setFrameOrigin(NSPoint(x: (area.midX - frame.width / 2).rounded(), y: (area.midY - frame.height / 2).rounded()))
+    }
+}
+
+@MainActor
 final class AboutWindow {
     private var window: NSWindow?
     func show() {
@@ -276,7 +295,7 @@ final class AboutWindow {
             window.backgroundColor = CandyTheme.window
             window.isReleasedWhenClosed = false
             window.contentView = NSHostingView(rootView: AboutView())
-            window.center()
+            window.centerOnActiveScreen()
             self.window = window
         }
         NSApp.activate(ignoringOtherApps: true)

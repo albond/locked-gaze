@@ -8,11 +8,12 @@ struct CameraPresentation {
     let canSwitch: Bool
     let dockBadge: String
 
-    init(state: CameraLifecycle.State, correcting: Bool, closing: Bool = false) {
+    init(state: CameraLifecycle.State, correcting: Bool, browsing: Bool = false, closing: Bool = false) {
         let effective: CameraLifecycle.State = closing ? .stopping : state
         let running: GazeMode = correcting ? .lockedGaze : .passThrough
         canSwitch = effective == .idle || effective == .active
         switch effective {
+        case .idle where browsing && !closing: mode = .browser; iconMode = .browser; status = "Browser"; dockBadge = "Web"
         case .idle: mode = .off; iconMode = .off; status = "Off"; dockBadge = "Off"
         case .starting: mode = running; iconMode = .off; status = "Starting…"; dockBadge = "…"
         case .active: mode = running; iconMode = running; status = running.title; dockBadge = correcting ? "On" : "Pass"
